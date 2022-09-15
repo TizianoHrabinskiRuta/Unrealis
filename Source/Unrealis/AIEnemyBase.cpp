@@ -14,8 +14,6 @@ AAIEnemyBase::AAIEnemyBase()
 	EnemyBaseComponent = CreateDefaultSubobject<UEnemyBaseComponent>(TEXT("EnemyBase"));
 	PawnSensor = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensor"));
 
-	
-
 }
 
 // Called when the game starts or when spawned
@@ -30,7 +28,7 @@ void AAIEnemyBase::BeginPlay()
 
 void AAIEnemyBase::OnPlayerCaught(APawn* CaughtPawn)
 {
-
+	//REMEMBER TO ADD REFERENCES TO THE KEYS IN BB @TODO
 }
 
 void AAIEnemyBase::OnDeathCallback_Implementation()
