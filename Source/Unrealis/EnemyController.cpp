@@ -51,3 +51,8 @@ void AEnemyController::SetPlayerCaught(APawn* CaughtPawn)
 	}
 }
 
+void AEnemyController::CallExecuteAttack1()
+{
+	OnAttack1Call.Broadcast();
+}
+

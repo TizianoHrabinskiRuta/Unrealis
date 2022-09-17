@@ -18,6 +18,8 @@ class UNREALIS_API AEnemyController : public AAIController
 
 		AEnemyController();
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttack1Call);
+
 
 protected:
 
@@ -48,6 +50,10 @@ public:
 	UFUNCTION()
 	void SetPlayerCaught(APawn* CaughtPawn);
 
+	FAttack1Call OnAttack1Call;
+
+	UFUNCTION()
+		void CallExecuteAttack1();
 
 	FORCEINLINE UBlackboardComponent* GetBlackboard() const { return BlackboardComp; }
 	FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }

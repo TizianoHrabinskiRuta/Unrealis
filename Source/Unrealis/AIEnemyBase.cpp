@@ -3,6 +3,7 @@
 
 #include "AIEnemyBase.h"
 #include "EnemyBaseComponent.h"
+#include "EnemyController.h"
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
@@ -21,6 +22,13 @@ void AAIEnemyBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	AEnemyController* SelfController = Cast<AEnemyController>(GetController());
+
+	if (SelfController)
+	{
+		SelfController->OnAttack1Call.AddDynamic(this, &AAIEnemyBase::ExecuteAttack1);
+	}
+
 	this->EnemyBaseComponent->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback);
 	this->PawnSensor->OnSeePawn.AddDynamic(this, &AAIEnemyBase::OnPlayerCaught);
 }
@@ -29,12 +37,25 @@ void AAIEnemyBase::BeginPlay()
 void AAIEnemyBase::OnPlayerCaught(APawn* CaughtPawn)
 {
 	//REMEMBER TO ADD REFERENCES TO THE KEYS IN BB @TODO
+
+	AEnemyController* SelfController = Cast<AEnemyController>(GetController());
+
+	if (SelfController)
+	{
+		SelfController->SetPlayerCaught(CaughtPawn);
+	}
 }
 
 void AAIEnemyBase::OnDeathCallback_Implementation()
 {
 	Destroy();
 }
+
+void AAIEnemyBase::ExecuteAttack1_Implementation()
+{
+	
+}
+
 
 // Called every frame
 void AAIEnemyBase::Tick(float DeltaTime)
