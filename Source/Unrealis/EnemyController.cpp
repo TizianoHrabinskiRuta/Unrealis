@@ -48,6 +48,7 @@ void AEnemyController::SetPlayerCaught(APawn* CaughtPawn)
 	if (BlackboardComp)
 	{
 		BlackboardComp->SetValueAsObject(PlayerKey, CaughtPawn); // if the player was sensed, make the key in the blackboard have a reference to the relevant player
+		BlackboardComp->SetValueAsVector(TEXT("TargetLocation"), CaughtPawn->GetActorLocation());
 	}
 }
 
