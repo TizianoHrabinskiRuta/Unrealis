@@ -15,6 +15,7 @@
 		Enemy->CallExecuteAttack1();
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Executed attack node"));
 
+
 		return EBTNodeResult::Succeeded;
 	}
 

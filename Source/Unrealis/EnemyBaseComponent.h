@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void TakeDamage(float Damage);
 
+	UFUNCTION(BlueprintCallable)
+		FORCEINLINE float GetHealth() const { return Health; }
+
 	FDiedDelegate OnDeath;
 
 };
