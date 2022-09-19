@@ -39,6 +39,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetHealth() const { return Health; }
 
+	UPROPERTY(BlueprintAssignable)
 	FDiedDelegate OnDeath;
 
 };
