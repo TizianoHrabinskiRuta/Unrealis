@@ -23,3 +23,15 @@ Investigamos sobre el peon
 Arte: Riggeamos un enemigo y animamos el slime. También hicimos retopology a un esqueleto e hicimos y riggeamos un arco con tensión.
 
 Programación: Logramos hacer funcionar el arco y una bola de fuego en Unreal. También añadimos una tirolesa para más movilidad.
+
+29/8 a 9/9
+
+Arte: Hicimos el terreno del nivel, e importamos las animaciones basicas de los enemigos, estos siendo el esqueleto y el slime. 
+
+Programacion: Empezamos con la IA de los enemigos, y completamos la programacion del jugador, asi como tambien reiniciamos el proceso del arco, ya que al tratarlo de usar en VR tuvimos varios problemas y empezamos la espada y el vinculo de scripts y actores del juego.
+
+12/9 a 23/9
+
+Arte: La espada está bakeada y terminada. Estamos añadiendo Foliage al terreno y rehaciendo las animaciones del Slime, ya que traía errores al importarlo. 
+
+Programacion: La espada esta terminada y ya podemos eliminar enemigos, la IA tambien esta terminada, empezamos con el arco nuevamente, ademas de perfeccionar el Jugador, la IA y la espada
