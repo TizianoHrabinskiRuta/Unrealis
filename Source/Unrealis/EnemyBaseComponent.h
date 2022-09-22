@@ -23,7 +23,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float Health = 100.f;
+		float Health = 150.f;
 private:
 
 	UFUNCTION()
