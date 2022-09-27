@@ -10,6 +10,7 @@ UEnemyBaseComponent::UEnemyBaseComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+
 	// ...
 }
 
@@ -30,7 +31,13 @@ void UEnemyBaseComponent::CheckForDeath()
 	if (this->Health <= 0)
 	{
 		OnDeath.Broadcast();
+		HasDied();
 	}
+}
+
+void UEnemyBaseComponent::HasDied_Implementation()
+{
+
 }
 
 void UEnemyBaseComponent::TakeDamage(float Damage)

@@ -14,6 +14,8 @@ class UNREALIS_API UEnemyBaseComponent : public UActorComponent
 
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDiedDelegate);
 
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHasTakenDamageDelegate); 
+
 public:	
 	// Sets default values for this component's properties
 	UEnemyBaseComponent();
@@ -24,6 +26,7 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Health = 150.f;
+
 private:
 
 	UFUNCTION()
@@ -39,7 +42,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetHealth() const { return Health; }
 
+	UFUNCTION(BlueprintNativeEvent)
+		void HasDied();
+
 	UPROPERTY(BlueprintAssignable)
 	FDiedDelegate OnDeath;
+
+	UPROPERTY(BlueprintAssignable)
+		FHasTakenDamageDelegate OnDamaged;
 
 };

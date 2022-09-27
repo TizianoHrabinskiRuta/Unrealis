@@ -27,7 +27,7 @@ protected:
 	UFUNCTION(BlueprintNativeEvent)
 		void OnDeathCallback();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyBaseComponent* EnemyBaseComponent;	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
