@@ -19,23 +19,33 @@ EBTNodeResult::Type URoamTargetNode::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 		
 		ATargetPointBase* NextPatrolPoint = nullptr;
 
-
-		if (Controller->CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1) // If it hasnt already cycled through all the target points
+		
+		
+		if (AvailablePatrolPoints.Num() <= 0)
 		{
-			NextPatrolPoint = Cast<ATargetPointBase>(AvailablePatrolPoints[++Controller->CurrentPatrolPoint]); // Gets the reference to the next target point stored in the TArray<AActor*>
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Couldnt find any patrol points @RoamTargetNode"));
+			return EBTNodeResult::Failed;
 		}
 
-		else // If it has cycled through all Target points, set the current patrol point to the beginning
-		{
-			NextPatrolPoint = Cast<ATargetPointBase>(AvailablePatrolPoints[0]);
-			Controller->CurrentPatrolPoint = 0;
-		}
+			if (Controller->CurrentPatrolPoint != AvailablePatrolPoints.Num() - 1) // If it hasnt already cycled through all the target points
+			{
+				NextPatrolPoint = Cast<ATargetPointBase>(AvailablePatrolPoints[++Controller->CurrentPatrolPoint]); // Gets the reference to the next target point stored in the TArray<AActor*>
+			}	
+
+			else // If it has cycled through all Target points, set the current patrol point to the beginning
+			{
+				NextPatrolPoint = Cast<ATargetPointBase>(AvailablePatrolPoints[0]);
+				Controller->CurrentPatrolPoint = 0;
+			}
 
 
-		BlackboardComp->SetValueAsObject("LocationToGo", NextPatrolPoint); // Changes the key in the blackboard to the reference of the found to be next target point
+			BlackboardComp->SetValueAsObject("LocationToGo", NextPatrolPoint); // Changes the key in the blackboard to the reference of the found to be next target point
 
 
-		return EBTNodeResult::Succeeded; // lets the logic handler know the code hasnt fucked up 
+			return EBTNodeResult::Succeeded; // lets the logic handler know the code hasnt fucked up 
+		
+		
+			
 	}
 	return EBTNodeResult::Failed; // lets the logic handler know the code has fucked up
 

@@ -36,7 +36,6 @@ void AAIEnemyBase::BeginPlay()
 
 void AAIEnemyBase::OnPlayerCaught(APawn* CaughtPawn)
 {
-	//REMEMBER TO ADD REFERENCES TO THE KEYS IN BB @TODO
 
 	AEnemyController* SelfController = Cast<AEnemyController>(GetController());
 
