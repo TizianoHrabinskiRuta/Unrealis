@@ -25,7 +25,10 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float Health = 150.f;
+		float Health;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		float MaxHealth = 150;
 
 private:
 
@@ -41,6 +44,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetHealth() const { return Health; }
+
+	UFUNCTION(BlueprintCallable)
+		FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 
 	UFUNCTION(BlueprintNativeEvent)
 		void HasDied();

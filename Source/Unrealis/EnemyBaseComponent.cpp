@@ -10,7 +10,7 @@ UEnemyBaseComponent::UEnemyBaseComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-
+	Health = MaxHealth;
 	// ...
 }
 
@@ -43,6 +43,7 @@ void UEnemyBaseComponent::HasDied_Implementation()
 void UEnemyBaseComponent::TakeDamage(float Damage)
 {
 	this->Health -= Damage;
+	OnDamaged.Broadcast();
 }
 // Called every frame
 void UEnemyBaseComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
