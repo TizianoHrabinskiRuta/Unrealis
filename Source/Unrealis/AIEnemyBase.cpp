@@ -12,7 +12,7 @@ AAIEnemyBase::AAIEnemyBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	EnemyBaseComponent = CreateDefaultSubobject<UEnemyBaseComponent>(TEXT("EnemyBase"));
+	EnemyBaseComp = CreateDefaultSubobject<UEnemyBaseComponent>(TEXT("EnemyBase"));
 	PawnSensor = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensor"));
 
 }
@@ -29,7 +29,7 @@ void AAIEnemyBase::BeginPlay()
 		SelfController->OnAttack1Call.AddDynamic(this, &AAIEnemyBase::ExecuteAttack1);
 	}
 
-	this->EnemyBaseComponent->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback);
+	this->EnemyBaseComp->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback);
 	this->PawnSensor->OnSeePawn.AddDynamic(this, &AAIEnemyBase::OnPlayerCaught);
 }
 
@@ -69,4 +69,3 @@ void AAIEnemyBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-

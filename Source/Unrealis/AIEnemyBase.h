@@ -28,7 +28,7 @@ protected:
 		void OnDeathCallback();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UEnemyBaseComponent* EnemyBaseComponent;	
+		class UEnemyBaseComponent* EnemyBaseComp;	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UPawnSensingComponent* PawnSensor;
@@ -49,5 +49,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE UEnemyBaseComponent* GetEnemyBase() const { return EnemyBaseComponent; }
+	FORCEINLINE UEnemyBaseComponent* GetEnemyBase() const { return EnemyBaseComp; }
+
 };
