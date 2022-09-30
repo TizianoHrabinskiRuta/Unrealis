@@ -50,6 +50,8 @@ bool UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, fl
 	if (SpawnedInstance)
 	{
 		GetWorld()->GetTimerManager().SetTimer(CooldownHandle, this, &UFireballComponent::CooldownCallback, 1.f, false);
+		SpawnedInstance->MasterFunction(MovementSpeed, DesiredTranslations, Damage, GFXMesh, HitboxMesh);
+		SpawnedInstance->StartMoving();
 		this->IsInCooldown = true;
 		return true;
 	}

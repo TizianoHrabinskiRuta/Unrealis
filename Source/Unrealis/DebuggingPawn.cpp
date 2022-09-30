@@ -63,10 +63,16 @@ void ADebuggingPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("SideMovement", this, &ADebuggingPawn::MoveSideways);
 	PlayerInputComponent->BindAxis("XMouseMovement", this, &ADebuggingPawn::Rotate);
 	PlayerInputComponent->BindAction("Attack1", IE_Pressed, this, &ADebuggingPawn::AttackOne);
+	PlayerInputComponent->BindAction("SwitchElement", IE_Pressed, this, &ADebuggingPawn::SwitchElement);
 
 }
 
 void ADebuggingPawn::AttackOne_Implementation()
+{
+
+}
+
+void ADebuggingPawn::SwitchElement_Implementation()
 {
 
 }

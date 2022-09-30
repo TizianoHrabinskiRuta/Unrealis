@@ -18,6 +18,7 @@ AFireball::AFireball()
 
 	GFX->SetupAttachment(RootComponent);
 	Hitbox->SetVisibility(false, false);
+	GFX->SetVisibility(true);
 }
 
 // Called when the game starts or when spawned

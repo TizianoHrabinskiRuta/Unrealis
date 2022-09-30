@@ -60,4 +60,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 		void AttackOne();
 
+	UFUNCTION(BlueprintNativeEvent)
+		void SwitchElement();
+
 };

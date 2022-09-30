@@ -28,7 +28,7 @@ protected:
 		float Health;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float MaxHealth = 150;
+		float MaxHealth = 150.f;
 
 private:
 
@@ -47,6 +47,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
+
+	UFUNCTION(BlueprintCallable)
+		FORCEINLINE void SetMaxHealth(float In) { MaxHealth = In; }
 
 	UFUNCTION(BlueprintNativeEvent)
 		void HasDied();
