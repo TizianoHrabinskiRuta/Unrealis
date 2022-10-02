@@ -45,6 +45,7 @@ void AAIEnemyBase::OnPlayerCaught(APawn* CaughtPawn)
 	}
 }
 
+#pragma region BlueprintNativeEvents
 void AAIEnemyBase::OnDeathCallback_Implementation()
 {
 	Destroy();
@@ -55,6 +56,17 @@ void AAIEnemyBase::ExecuteAttack1_Implementation()
 	
 }
 
+void AAIEnemyBase::FreezeAnimations_Implementation()
+{
+
+}
+
+void AAIEnemyBase::UnfreezeAnimations_Implementation()
+{
+
+}
+
+#pragma endregion
 
 // Called every frame
 void AAIEnemyBase::Tick(float DeltaTime)
@@ -67,5 +79,4 @@ void AAIEnemyBase::Tick(float DeltaTime)
 void AAIEnemyBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
 }

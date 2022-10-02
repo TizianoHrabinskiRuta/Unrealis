@@ -28,10 +28,10 @@ protected:
 		bool InCooldown = false;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float FreezeTime = 5.f;
+		float FreezeTime = 10.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float CooldownTime = 20.f;
+		float CooldownTime = 5.f;
 
 	UFUNCTION()
 		void UnfreezeCallback();

@@ -51,4 +51,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FORCEINLINE UEnemyBaseComponent* GetEnemyBase() const { return EnemyBaseComp; }
 
+	UFUNCTION(BlueprintNativeEvent)
+		void FreezeAnimations();
+
+	UFUNCTION(BlueprintNativeEvent)
+		void UnfreezeAnimations();
+
 };

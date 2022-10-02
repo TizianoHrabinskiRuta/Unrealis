@@ -50,7 +50,10 @@ void UTimeMagicComponent::FreezeEnemies()
 	{
 		AAIEnemyBase* Casted = Cast<AAIEnemyBase>(e);
 
-		Cast<UCharacterMovementComponent>(Casted->GetMovementComponent())->MaxWalkSpeed = 0.f;
+		Casted->FreezeAnimations();
+
+		Cast<UCharacterMovementComponent>(Casted->GetMovementComponent())->MaxWalkSpeed = 0.1f;
+
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(UnfreezeDelegate, this, &UTimeMagicComponent::UnfreezeCallback, FreezeTime, false);
@@ -72,8 +75,8 @@ void UTimeMagicComponent::UnfreezeCallback()
 	{	
 		AAIEnemyBase* Casted = Cast<AAIEnemyBase>(e);
 
-		Cast<UCharacterMovementComponent>(Casted->GetMovementComponent())->MaxWalkSpeed = 300.f; // Once they freeze, they wont unfreeze (maybe has to do with move node?) or maybe just have to add a branch in BT where it runs once they unfreeze @JUANMA
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Iterated"));
+		Casted->UnfreezeAnimations();
+		Cast<UCharacterMovementComponent>(Casted->GetMovementComponent())->MaxWalkSpeed = 300.f;  // Fixed :smile:
 	}
 
 }

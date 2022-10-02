@@ -41,6 +41,7 @@ EBTNodeResult::Type URoamTargetNode::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 
 			BlackboardComp->SetValueAsObject("LocationToGo", NextPatrolPoint); // Changes the key in the blackboard to the reference of the found to be next target point
 
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Executed RoamTargetNode"));
 
 			return EBTNodeResult::Succeeded; // lets the logic handler know the code hasnt fucked up 
 		
