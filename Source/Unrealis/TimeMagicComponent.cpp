@@ -4,6 +4,8 @@
 #include "TimeMagicComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "AIEnemyBase.h"
+#include "BrainComponent.h"
+#include "AIController.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PawnMovementComponent.h"
 
@@ -52,8 +54,16 @@ void UTimeMagicComponent::FreezeEnemies()
 
 		Casted->FreezeAnimations();
 
-		Cast<UCharacterMovementComponent>(Casted->GetMovementComponent())->MaxWalkSpeed = 0.1f;
+		UCharacterMovementComponent* Ref = Cast<UCharacterMovementComponent>(Casted->GetMovementComponent());
 
+		Ref->MaxWalkSpeed = 0.1f;
+
+		FRotator i = FRotator::ZeroRotator;
+
+		Ref->RotationRate = i; // sorta works, is just visual so i wont fix it until later @TODO
+
+		
+		Cast<AAIController>(Casted->GetController())->BrainComponent->PauseLogic(TEXT("Freeze"));
 	}
 
 	GetWorld()->GetTimerManager().SetTimer(UnfreezeDelegate, this, &UTimeMagicComponent::UnfreezeCallback, FreezeTime, false);
@@ -71,12 +81,21 @@ void UTimeMagicComponent::UnfreezeCallback()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Should Unfreeze"));
 
-	for (auto e : EnemiesToFreeze)
+	for (auto e : EnemiesToFreeze) // for each enemy that currently exists
 	{	
 		AAIEnemyBase* Casted = Cast<AAIEnemyBase>(e);
 
-		Casted->UnfreezeAnimations();
-		Cast<UCharacterMovementComponent>(Casted->GetMovementComponent())->MaxWalkSpeed = 300.f;  // Fixed :smile:
+		Casted->UnfreezeAnimations(); // call a custom function that sets the animplayrate to 1
+
+		UCharacterMovementComponent* Ref = Cast<UCharacterMovementComponent>(Casted->GetMovementComponent());
+
+		Ref->MaxWalkSpeed = 300.f;  // Make them be able to move again
+		FRotator i = FRotator::ZeroRotator;
+
+		i.Add(30.f, 0.f, 0.f); // Set the following rotation speed back to default
+
+		Ref->RotationRate = i;
+		Cast<AAIController>(Casted->GetController())->BrainComponent->ResumeLogic(TEXT("Freeze")); // Resume execution of BT
 	}
 
 }
