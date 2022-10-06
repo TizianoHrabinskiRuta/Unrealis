@@ -14,7 +14,7 @@ class UNREALIS_API UEnemyBaseComponent : public UActorComponent
 
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDiedDelegate);
 
-		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHasTakenDamageDelegate); 
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHasTakenDamageDelegate, float, DamageTaken); 
 
 public:	
 	// Sets default values for this component's properties

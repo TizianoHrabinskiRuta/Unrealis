@@ -20,7 +20,6 @@ void UEnemyBaseComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CheckForDeath();
 
 	// ...
 	
@@ -28,7 +27,7 @@ void UEnemyBaseComponent::BeginPlay()
 
 void UEnemyBaseComponent::CheckForDeath()
 {
-	if (this->Health <= 0)
+	if (Health <= 0)
 	{
 		OnDeath.Broadcast();
 		HasDied();
@@ -43,12 +42,14 @@ void UEnemyBaseComponent::HasDied_Implementation()
 void UEnemyBaseComponent::TakeDamage(float Damage)
 {
 	this->Health -= Damage;
-	OnDamaged.Broadcast();
+	OnDamaged.Broadcast(Damage);
 }
 // Called every frame
 void UEnemyBaseComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	CheckForDeath();
 
 	// ...
 }

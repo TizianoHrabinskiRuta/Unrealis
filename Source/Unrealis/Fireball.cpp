@@ -31,16 +31,20 @@ void AFireball::BeginPlay()
 
 void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
-{
+{	
 
-	if (OtherActor->ActorHasTag(TEXT("EnemyTag")))
+	if (OtherActor->ActorHasTag("EnemyTag"))
 	{
 		UEnemyBaseComponent* Base = Cast<AAIEnemyBase>(OtherActor)->GetEnemyBase();
-		if (Base) Base->TakeDamage(this->Damage);
+		if (Base)
+			Base->TakeDamage(this->Damage);
 	}
 
-	OnDestruction.Broadcast(this);
-	Destroy();
+	if (!OtherActor->ActorHasTag("PlayerTag"))
+	{
+		OnDestruction.Broadcast(this);
+		Destroy();
+	}
 }
 
 void AFireball::SetMovementParameters(float SpeedToSetTo, float _DesiredTranslations)
