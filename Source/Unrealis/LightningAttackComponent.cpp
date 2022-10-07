@@ -34,7 +34,7 @@ void ULightningAttackComponent::CooldownCallback()
 void ULightningAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
+ 
 	// ...
 }
 
