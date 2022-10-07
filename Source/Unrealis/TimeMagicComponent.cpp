@@ -81,6 +81,8 @@ void UTimeMagicComponent::UnfreezeCallback()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Should Unfreeze"));
 
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIEnemyBase::StaticClass(), EnemiesToFreeze);
+
 	for (auto e : EnemiesToFreeze) // for each enemy that currently exists
 	{	
 		AAIEnemyBase* Casted = Cast<AAIEnemyBase>(e);

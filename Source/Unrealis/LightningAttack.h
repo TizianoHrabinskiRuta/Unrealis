@@ -46,7 +46,7 @@ public:
 		void SetParams(UStaticMesh* GFXMesh, FRotator Rotation);// Configures the lightning GFX
 
 	UFUNCTION()
-		void CheckForColission(FVector SpawnLocation, FVector ForwardsVector, FRotator Rotation); // Raycasts for colission
+		void CheckForColission(FVector SpawnLocation, FVector ForwardsVector, FRotator Rotation, AActor* OwnerRef); // Raycasts for colission
 
 	UFUNCTION()
 		void SetDamage(float FDamage);

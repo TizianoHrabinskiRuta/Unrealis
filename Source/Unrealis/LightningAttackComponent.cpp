@@ -38,7 +38,7 @@ void ULightningAttackComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
-void ULightningAttackComponent::FireLightning(UStaticMesh* GFXMesh, FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation)
+void ULightningAttackComponent::FireLightning(UStaticMesh* GFXMesh, FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation, AActor* OwnerReference)
 {
 	if (IsInCooldown) return;
 	GetWorld()->GetTimerManager().SetTimer(CooldownHandle, this, &ULightningAttackComponent::CooldownCallback, CooldownTime);
@@ -48,7 +48,7 @@ void ULightningAttackComponent::FireLightning(UStaticMesh* GFXMesh, FVector Spaw
 	ALightningAttack* SpawnedLightning = GetWorld()->SpawnActor<ALightningAttack>(SpawnLocation, SpawnRotation);
 	SpawnedLightning->SetParams(GFXMesh, SpawnRotation);
 	SpawnedLightning->SetDamage(AttackDamage);
-	SpawnedLightning->CheckForColission(SpawnLocation, ForwardsVector, SpawnRotation);
+	SpawnedLightning->CheckForColission(SpawnLocation, ForwardsVector, SpawnRotation, OwnerReference);
 }
 
 void ULightningAttackComponent::SetDamage(float DamageToSetTo)
