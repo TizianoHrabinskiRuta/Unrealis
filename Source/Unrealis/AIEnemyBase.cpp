@@ -12,7 +12,7 @@ AAIEnemyBase::AAIEnemyBase()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	EnemyBaseComp = CreateDefaultSubobject<UEnemyBaseComponent>(TEXT("EnemyBase"));
+	HealthComponent = CreateDefaultSubobject<UEnemyBaseComponent>(TEXT("EnemyBase"));
 	PawnSensor = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensor"));
 
 }
@@ -29,7 +29,8 @@ void AAIEnemyBase::BeginPlay()
 		SelfController->OnAttack1Call.AddDynamic(this, &AAIEnemyBase::ExecuteAttack1);
 	}
 
-	this->EnemyBaseComp->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback);
+	if (HealthComponent)
+		this->HealthComponent->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback); else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Didnt instance EBC correctly @AIEnemyBase"));
 	this->PawnSensor->OnSeePawn.AddDynamic(this, &AAIEnemyBase::OnPlayerCaught);
 }
 

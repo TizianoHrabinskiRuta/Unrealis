@@ -28,7 +28,7 @@ protected:
 		void OnDeathCallback();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UEnemyBaseComponent* EnemyBaseComp;	
+		class UEnemyBaseComponent* HealthComponent;	//This is giving errors again, change the name to something i wont use anywhere else again so it might stop (im so tired of this)
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UPawnSensingComponent* PawnSensor;
@@ -49,7 +49,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable)
-	FORCEINLINE UEnemyBaseComponent* GetEnemyBase() const { return EnemyBaseComp; }
+	FORCEINLINE UEnemyBaseComponent* GetEnemyBase() const { return HealthComponent; }
 
 	UFUNCTION(BlueprintNativeEvent)
 		void FreezeAnimations();

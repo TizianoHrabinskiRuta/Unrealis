@@ -4,6 +4,7 @@
 #include "LightningAttack.h"
 #include "EnemyBaseComponent.h"
 #include "AIEnemyBase.h"
+#include "DebuggingPawn.h"
 
 // Sets default values
 ALightningAttack::ALightningAttack()
@@ -12,6 +13,11 @@ ALightningAttack::ALightningAttack()
 	PrimaryActorTick.bCanEverTick = true;
 	GFX = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GFX"));
 
+}
+
+void ShowMessage(FString Message)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, Message);
 }
 
 // Called when the game starts or when spawned
@@ -52,26 +58,31 @@ void ALightningAttack::SetDamage(float FDamage)
 	this->Damage = FDamage;
 }
 
-void ALightningAttack::CheckForColission(FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation)
+void ALightningAttack::CheckForColission(FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation, AActor* OwnerRef) // Broken, most likely is colliding with caster for some reason. Maybe try a multihit linetrace, or set spawn point further into the map
 {
+	TArray<FHitResult> HitResultReturn;
 	FHitResult RaycastResult;
 
 	FCollisionQueryParams QueryParams;
 
-	QueryParams.AddIgnoredActor(this->GetOwner());
+	QueryParams.AddIgnoredActor(OwnerRef);
 
-	FVector BeamEnd = SpawnLocation + ForwardsVector * Length;
+	FVector CalcSpawnLocation = SpawnLocation;
+	SpawnLocation += ForwardsVector * 5000.f;
 
-	DrawDebugLine(GetWorld(), SpawnLocation, BeamEnd, FColor::Red, false, 5.f);
+	FVector BeamEnd = CalcSpawnLocation + ForwardsVector * Length;
 
-	if (GetWorld()->LineTraceSingleByChannel(RaycastResult, SpawnLocation, BeamEnd, ECC_Pawn, QueryParams)) // find ECC for physics objkects, or for things that arent necessarily visible, since the hitbox is hidden in play
+	DrawDebugLine(GetWorld(), CalcSpawnLocation, BeamEnd, FColor::Red, false, 5.f);
+
+	if (GetWorld()->LineTraceMultiByChannel(HitResultReturn, CalcSpawnLocation, BeamEnd, ECC_Visibility, QueryParams))
 	{
-		AAIEnemyBase* HitEnemy = Cast<AAIEnemyBase>(RaycastResult.GetActor());
+		for (auto h : HitResultReturn)
+		{
+			if (Cast<AAIEnemyBase>(h.GetActor())) Cast<AAIEnemyBase>(h.GetActor())->GetEnemyBase()->TakeDamage(this->Damage);
 
-		if (HitEnemy)
-			HitEnemy->GetEnemyBase()->TakeDamage(this->Damage);
-
-		GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("Hit something"));
+			if (Cast<ADebuggingPawn>(h.GetActor())) ShowMessage(TEXT("Hit self again"));
+		}
+		
 	}
 	else GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("Either missed or didnt detect (sadge)"));
 }

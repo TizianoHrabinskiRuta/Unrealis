@@ -31,7 +31,7 @@ protected:
 		float AttackDamage = 50;
 
 	UPROPERTY(BlueprintReadOnly)
-		float CooldownTime = 10.f;
+		float CooldownTime = 1.f;
 
 	UFUNCTION()
 		void CooldownCallback();
@@ -46,7 +46,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-		void FireLightning(UStaticMesh* GFXMesh, FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation);
+		void FireLightning(UStaticMesh* GFXMesh, FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation, AActor* OwnerReference);
 
 	UFUNCTION(BlueprintCallable)
 		void SetDamage(float DamageToSetTo);
