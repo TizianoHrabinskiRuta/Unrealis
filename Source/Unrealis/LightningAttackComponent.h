@@ -46,7 +46,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-		void FireLightning(UStaticMesh* GFXMesh, FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation, AActor* OwnerReference);
+		void FireLightning(UStaticMesh* GFXMesh, FVector SpawnLocation, FVector ForwardsVector, FRotator SpawnRotation, AActor* OwnerReference); // For owner reference, pass a reference to self 
 
 	UFUNCTION(BlueprintCallable)
 		void SetDamage(float DamageToSetTo);
