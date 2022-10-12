@@ -33,6 +33,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float CooldownTime = 10.f;
 
+
+
 	FTimerHandle CooldownHandle;
 
 public:	
@@ -40,9 +42,10 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-		bool Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation);
+		bool Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner);
 
 	UFUNCTION(BlueprintCallable)
 		void SetCooldownTime(float TimeToSetTo);
-		
+	
+
 };

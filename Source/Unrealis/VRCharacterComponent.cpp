@@ -30,6 +30,7 @@ void UVRCharacterComponent::BeginPlay()
 void UVRCharacterComponent::Attack1()
 {
 	Attack1Event.Broadcast();
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Fired some magic"));
 }
 
 // Called every frame
