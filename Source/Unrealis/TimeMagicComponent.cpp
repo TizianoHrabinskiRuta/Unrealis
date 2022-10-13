@@ -79,7 +79,6 @@ void UTimeMagicComponent::CooldownCallback()
 
 void UTimeMagicComponent::UnfreezeCallback()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Should Unfreeze"));
 
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAIEnemyBase::StaticClass(), EnemiesToFreeze);
 

@@ -84,6 +84,6 @@ void ALightningAttack::CheckForColission(FVector SpawnLocation, FVector Forwards
 		}
 		
 	}
-	else GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Green, TEXT("Either missed or didnt detect (sadge)"));
+	
 }
 
