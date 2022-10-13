@@ -89,7 +89,7 @@ void AFireball::Move()
 	else
 	{
 		OnDestruction.Broadcast(this);
-		Destroy();
+
 	}
 }
 

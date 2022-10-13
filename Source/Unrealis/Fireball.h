@@ -25,7 +25,6 @@ protected:
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 		bool bFromSweep, const FHitResult& SweepResult);
 
-
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		UStaticMeshComponent* Hitbox;
 
@@ -66,6 +65,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void StartMoving();
+
+	
 
 	FHasBeenDestroyed OnDestruction;
 

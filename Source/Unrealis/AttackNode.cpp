@@ -13,7 +13,7 @@
 	if (Enemy)
 	{
 		Enemy->CallExecuteAttack1();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Executed attack node"));
+		
 
 		Enemy->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), NULL);
 
