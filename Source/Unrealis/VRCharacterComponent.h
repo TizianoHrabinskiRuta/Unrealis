@@ -13,9 +13,11 @@ class UNREALIS_API UVRCharacterComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDiedDelegate);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDiedDelegate);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHasTakenDamageDelegate, float, DamageTaken);
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHasHealedDelegate, float, InHealth);
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttackEventDelegate);
 
@@ -51,6 +53,9 @@ public:
 		void TakeDamage(float Damage);
 
 	UFUNCTION(BlueprintCallable)
+		void HealPlayer(float InHealth);
+
+	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetHealth() const { return Health; }
 
 	UFUNCTION(BlueprintCallable)
@@ -70,4 +75,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 		FHasTakenDamageDelegate OnDamaged;		
+
+	UPROPERTY(BlueprintAssignable)
+		FHasHealedDelegate OnHeal;
 };

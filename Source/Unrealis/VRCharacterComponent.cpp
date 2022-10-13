@@ -26,6 +26,11 @@ void UVRCharacterComponent::BeginPlay()
 	PlayerInputComponent->BindAction("SwitchElement", IE_Pressed, this, &UVRCharacterComponent::CallElementChangeEvent);
 }
 
+void UVRCharacterComponent::HealPlayer(float InHealth)
+{
+	this->Health += InHealth;
+	OnHeal.Broadcast(InHealth);
+}
 
 void UVRCharacterComponent::Attack1()
 {
