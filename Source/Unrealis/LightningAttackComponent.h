@@ -53,5 +53,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void ChangeCooldownTime(float TimeToSetTo);
+
+	UFUNCTION(BlueprintCallable)
+		FORCEINLINE float GetCooldownTime() const { return CooldownTime; }
 		
 };

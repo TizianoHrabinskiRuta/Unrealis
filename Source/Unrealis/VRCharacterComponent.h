@@ -30,6 +30,12 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+		void Attack1();
+
+	UFUNCTION()
+		void CallElementChangeEvent();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Health;
 
@@ -39,12 +45,9 @@ protected:
 	UPROPERTY()
 		class UInputComponent* PlayerInputComponent;
 
-	UFUNCTION()
-		void Attack1();
-
-	UFUNCTION()
-		void CallElementChangeEvent();
-
+	UPROPERTY()
+		float DefenseMultiplier = 1.f; // The lower this is, the higher the defense
+	
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
