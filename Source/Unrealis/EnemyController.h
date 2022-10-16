@@ -23,6 +23,9 @@ class UNREALIS_API AEnemyController : public AAIController
 
 protected:
 
+	UFUNCTION()
+		virtual void OnPossess(APawn* PossessedPawn) override;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBehaviorTreeComponent* BehaviorTreeComp;
 
@@ -36,19 +39,13 @@ protected:
 		FName PlayerKey;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TArray<AActor*> PatrolPoints;
+		TArray<AActor*> InternalPatrolPoints;
 
 	UPROPERTY()
-		class AAIEnemyBase* OwnerRef;
-
-	UFUNCTION()
-	virtual void OnPossess(APawn* PossessedPawn) override;
+		class AAIEnemyBase* OwnerRef;	
 
 public:
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	int32 CurrentPatrolPoint = 0;
-
+	
 	UFUNCTION()
 	void SetPlayerCaught(APawn* CaughtPawn);
 
@@ -56,15 +53,14 @@ public:
 		FORCEINLINE UBlackboardComponent* GetBlackboard() const { return BlackboardComp; }
 
 	UFUNCTION()
-		FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return PatrolPoints; }
-
-	UFUNCTION(BlueprintCallable)
-		void SetCustomPatrolPoints(TArray<AActor*> InPatrolPoints);
-
-	FAttack1Call OnAttack1Call;
+		FORCEINLINE TArray<AActor*> GetPatrolPoints() const { return InternalPatrolPoints; }
 
 	UFUNCTION()
 		void CallExecuteAttack1();
 
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+		int32 CurrentPatrolPoint = 0;
+
+	FAttack1Call OnAttack1Call;
+
 }; 

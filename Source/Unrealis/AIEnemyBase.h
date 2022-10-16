@@ -57,4 +57,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 		void UnfreezeAnimations();
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AI)
+		TArray<AActor*> PatrolPoints;
+
 };

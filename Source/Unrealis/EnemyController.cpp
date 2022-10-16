@@ -25,17 +25,17 @@ void AEnemyController::OnPossess(APawn* PossessedPawn)
 	Super::OnPossess(PossessedPawn);
 
 	OwnerRef = Cast<AAIEnemyBase>(PossessedPawn);
-
+	
 	if (OwnerRef)
 	{
 		if (OwnerRef->Tree->BlackboardAsset)
 		{
 			BlackboardComp->InitializeBlackboard(*(OwnerRef->Tree->BlackboardAsset));
+
+			InternalPatrolPoints = OwnerRef->PatrolPoints;
+
+			BehaviorTreeComp->StartTree(*OwnerRef->Tree);
 		}
-
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATargetPointBase::StaticClass(), PatrolPoints);
-
-		BehaviorTreeComp->StartTree(*OwnerRef->Tree);
 	}
 }
 
@@ -46,14 +46,6 @@ void AEnemyController::SetPlayerCaught(APawn* CaughtPawn)
 	{
 		BlackboardComp->SetValueAsObject(PlayerKey, CaughtPawn); // if the player was sensed, make the key in the blackboard have a reference to the relevant player
 		BlackboardComp->SetValueAsVector(TEXT("TargetLocation"), CaughtPawn->GetActorLocation());
-	}
-}
-
-void AEnemyController::SetCustomPatrolPoints(TArray<AActor*> InPatrolPoints)
-{
-	if (OwnerRef)
-	{
-		this->PatrolPoints = InPatrolPoints;
 	}
 }
 
