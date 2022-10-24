@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "TargetPointBase.h"
+#include "SlimeBase.h"
 #include "AIEnemyBase.h"
 
 
@@ -35,6 +36,22 @@ void AEnemyController::OnPossess(APawn* PossessedPawn)
 			InternalPatrolPoints = OwnerRef->PatrolPoints;
 
 			BehaviorTreeComp->StartTree(*OwnerRef->Tree);
+		}
+	}
+	else
+	{
+		
+		ASlimeBase* _OwnerRef = Cast<ASlimeBase>(PossessedPawn);
+		if (_OwnerRef)
+		{
+			BlackboardComp->InitializeBlackboard(*(_OwnerRef->Tree->BlackboardAsset));
+
+			InternalPatrolPoints = _OwnerRef->PatrolPoints;
+
+			BehaviorTreeComp->StartTree(*_OwnerRef->Tree);
+
+		} else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT(":( @EC"));
 		}
 	}
 }

@@ -58,6 +58,9 @@ public:
 	UFUNCTION()
 		void CallExecuteAttack1();
 
+	UFUNCTION()
+		FORCEINLINE AActor* GetControllerOwner()  const { return this->GetOwner(); }
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int32 CurrentPatrolPoint = 0;
 

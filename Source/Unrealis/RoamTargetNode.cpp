@@ -8,6 +8,8 @@
 EBTNodeResult::Type URoamTargetNode::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Called RTN"));
+
 	AEnemyController* Controller = Cast<AEnemyController>(OwnerComp.GetAIOwner()); // Get the controller from relevant AI character / pawn
 
 	if (Controller) // if found
@@ -23,7 +25,7 @@ EBTNodeResult::Type URoamTargetNode::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 		
 		if (AvailablePatrolPoints.Num() <= 0)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Couldnt find any patrol points. Did you try deleting the existing PatrolPointBPs and placing them in again?"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No patrol points assigned. Make sure to place some in and assign them in the array at the AI category @RoamTargetNode"));
 			return EBTNodeResult::Failed;
 		}
 
@@ -48,6 +50,7 @@ EBTNodeResult::Type URoamTargetNode::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 		
 			
 	}
+	else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed RTN"));
 	return EBTNodeResult::Failed; // lets the logic handler know the code has fucked up
 
 }
