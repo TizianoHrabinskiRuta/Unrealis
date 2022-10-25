@@ -31,7 +31,7 @@ EBTNodeResult::Type USlimeMovementNode::ExecuteTask(UBehaviorTreeComponent& Owne
 	if (!Target) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No key selected for target, or key is empty @SlimeMovementNode"));	return EBTNodeResult::Failed; }
 			
 	ASlimeBase* SlimeOwner = Cast<ASlimeBase>(OwnerActor);
-	if (SlimeOwner) SlimeOwner->OnGround.AddDynamic(this, &USlimeMovementNode::OnGroundCallback);
+	if (SlimeOwner) SlimeOwner->OnJumpRequest.AddDynamic(this, &USlimeMovementNode::OnGroundCallback);
 	else return EBTNodeResult::Failed;
 
 	if (HasReachedDestination) return EBTNodeResult::Succeeded;

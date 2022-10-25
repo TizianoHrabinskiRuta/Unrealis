@@ -15,7 +15,7 @@ class UNREALIS_API ASlimeBase : public APawn
 	GENERATED_BODY()
 
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRotationUpdatedDelegate);
-		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FJumpInitiatedDelegate);
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInitiateJumpDelegate);
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHasBeenGroundedDelegate);
 
 
@@ -80,10 +80,22 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 		void UnfreezeAnimations();
 
+	UFUNCTION(BlueprintNativeEvent)
+		void RequestJump();
+
+	UFUNCTION(BlueprintNativeEvent)
+		void OnGroundEvent();
+
+	UFUNCTION(BlueprintCallable)
+		void FireJumpRequest() { OnJumpRequest.Broadcast(); }
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AI)
 		TArray<AActor*> PatrolPoints;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintAssignable)
 		FHasBeenGroundedDelegate OnGround;
+
+	UPROPERTY(BlueprintAssignable)
+		FInitiateJumpDelegate OnJumpRequest;
 
 };

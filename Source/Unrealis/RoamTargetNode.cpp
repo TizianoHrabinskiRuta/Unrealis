@@ -8,7 +8,6 @@
 EBTNodeResult::Type URoamTargetNode::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Called RTN"));
 
 	AEnemyController* Controller = Cast<AEnemyController>(OwnerComp.GetAIOwner()); // Get the controller from relevant AI character / pawn
 

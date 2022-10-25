@@ -25,6 +25,7 @@ ASlimeBase::ASlimeBase()
 
 }
 
+
 // Called when the game starts or when spawned
 void ASlimeBase::BeginPlay()
 {
@@ -65,6 +66,10 @@ void ASlimeBase::OnDeathCallback_Implementation()
 {
 	Destroy();
 }
+void ASlimeBase::OnGroundEvent_Implementation()
+{
+
+}
 
 void ASlimeBase::ExecuteAttack1_Implementation()
 {
@@ -77,6 +82,11 @@ void ASlimeBase::FreezeAnimations_Implementation()
 }
 
 void ASlimeBase::UnfreezeAnimations_Implementation()
+{
+
+}
+
+void ASlimeBase::RequestJump_Implementation()
 {
 
 }
@@ -103,7 +113,7 @@ void ASlimeBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void ASlimeBase::CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {	
-	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Recieved hit")); bIsGrounded = false; return; }
+	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent(); bIsGrounded = false; return; } 
 	
 	return;
 }
