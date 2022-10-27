@@ -59,6 +59,10 @@ void ASlimeBase::OnPlayerCaught(APawn* CaughtPawn)
 	}
 }
 
+void ASlimeBase::FireJumpRequest()
+{
+	OnJumpRequest.Broadcast(this); 
+}
 
 
 #pragma region BlueprintNativeEvents
@@ -113,7 +117,7 @@ void ASlimeBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void ASlimeBase::CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {	
-	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent(); bIsGrounded = false; return; } 
+	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent();  bIsGrounded = false; return; }
 	
 	return;
 }

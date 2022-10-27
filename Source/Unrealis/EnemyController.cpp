@@ -41,14 +41,14 @@ void AEnemyController::OnPossess(APawn* PossessedPawn)
 	else
 	{
 		
-		ASlimeBase* _OwnerRef = Cast<ASlimeBase>(PossessedPawn);
-		if (_OwnerRef)
+		SlimeOwnerRef = Cast<ASlimeBase>(PossessedPawn);
+		if (SlimeOwnerRef)
 		{
-			BlackboardComp->InitializeBlackboard(*(_OwnerRef->Tree->BlackboardAsset));
+			BlackboardComp->InitializeBlackboard(*(SlimeOwnerRef->Tree->BlackboardAsset));
 
-			InternalPatrolPoints = _OwnerRef->PatrolPoints;
+			InternalPatrolPoints = SlimeOwnerRef->PatrolPoints;
 
-			BehaviorTreeComp->StartTree(*_OwnerRef->Tree);
+			BehaviorTreeComp->StartTree(*SlimeOwnerRef->Tree);
 
 		} else {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT(":( @EC"));

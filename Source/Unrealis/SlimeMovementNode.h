@@ -19,11 +19,13 @@ class UNREALIS_API USlimeMovementNode : public UBTTaskNode
 
 		virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "TargetKey"))
 		FBlackboardKeySelector TargetKey;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "The owner of this node instance. Please set so this doesnt break"))
+		FBlackboardKeySelector OwnerKey;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (DisplayName = "Acceptable distance to target", ToolTip = "How far away the owner can be to the target before the node calls success. I suggest you exaggerate it by around 30 units, since the calculation to target is a bit scuffed for some reason."))
 		float DistanceThreshold;
@@ -37,14 +39,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "Should debugging symbols display at runtime"))
 		bool DisplayDebuggingSymbols = false;
 
+	UFUNCTION()
+		void OnJumpRequest(AActor* Callee);
+
 
 private:
-	
+
 	UFUNCTION()
-		void OnGroundCallback();
+		void TimerCallback();
+	
+	UPROPERTY()
+		FRotator FoundLookAtRotation;
 
 	UPROPERTY()
-	FRotator FoundLookAtRotation;
+		FTimerHandle DebounceHandle;
 
 	UPROPERTY()
 		AActor* Target;
@@ -56,13 +64,21 @@ private:
 		UPrimitiveComponent* OwnerPrimitive;
 
 	UPROPERTY()
+		UBehaviorTreeComponent* StoredTreeReference;
+
+	UPROPERTY()
 		bool HasReachedDestination = false;
+
+	UPROPERTY()
+		bool BounceDebounce = false;
 
 	UPROPERTY()
 		int FrameBuffer = 10;
 
 	UPROPERTY()
 		int TranscurredFrames = 0;
+
+
 
 
 };

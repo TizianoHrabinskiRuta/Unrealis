@@ -42,12 +42,15 @@ protected:
 		TArray<AActor*> InternalPatrolPoints;
 
 	UPROPERTY()
-		class AAIEnemyBase* OwnerRef;	
+		class AAIEnemyBase* OwnerRef;
+
+	UPROPERTY()
+		class ASlimeBase* SlimeOwnerRef;
 
 public:
-	
+
 	UFUNCTION()
-	void SetPlayerCaught(APawn* CaughtPawn);
+		void SetPlayerCaught(APawn* CaughtPawn);
 
 	UFUNCTION()
 		FORCEINLINE UBlackboardComponent* GetBlackboard() const { return BlackboardComp; }
@@ -59,7 +62,10 @@ public:
 		void CallExecuteAttack1();
 
 	UFUNCTION()
-		FORCEINLINE AActor* GetControllerOwner()  const { return this->GetOwner(); }
+		FORCEINLINE AAIEnemyBase* GetControllerOwner() const { return OwnerRef; }
+
+	UFUNCTION()
+		FORCEINLINE ASlimeBase* GetSlimeControllerOwner() const { return SlimeOwnerRef; }
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int32 CurrentPatrolPoint = 0;
