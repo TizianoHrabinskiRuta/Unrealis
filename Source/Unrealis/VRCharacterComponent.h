@@ -59,6 +59,9 @@ public:
 		void HealPlayer(float InHealth);
 
 	UFUNCTION(BlueprintCallable)
+		void IncreaseDefense(float InDefense) { DefenseMultiplier -= InDefense; } // Subtracts DefenseMultiplier against InDefense. Base DefenseMultiplier is 1, so InDefense should be a small positive number, since defense is a multiplier.
+
+	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetHealth() const { return Health; }
 
 	UFUNCTION(BlueprintCallable)

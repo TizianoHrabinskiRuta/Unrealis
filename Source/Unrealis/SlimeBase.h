@@ -51,28 +51,54 @@ protected:
 private:
 
 	UFUNCTION()
+		AActor* GetCurrentTarget();
+
+	UFUNCTION()
+		bool IsPlayerTheCurrentTarget();
+
+	UFUNCTION()
+		bool HasReachedDestination();
+
+	UFUNCTION()
 		void OnPlayerCaught(APawn* CaughtPawn);
 
 	UFUNCTION()
-		void CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+		void CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);		
 
 	UPROPERTY()
-		TArray<AActor*> OverlappingActors;
+		AActor* CaughtPlayer;
+
+	UPROPERTY()
+		int SelectedPatrolPointIndex = 0;
+
+	UPROPERTY(EditAnywhere, Category = AI)
+		float DistanceThreshold = 200.f;
+
+	UPROPERTY(EditAnywhere, meta = (ToolTip = "How much force is applied for the physics calculation of the jump"))
+		float ForwardsForceToApply = 3500.f;
+
+	UPROPERTY(EditAnywhere, meta = (ToolTip = "How much force is applied for the physics calculation of the jump"))
+		float UpwardsForceToApply = 10000.f;
+
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintNativeEvent)
-		void ExecuteAttack1();
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UFUNCTION()
+		FORCEINLINE AActor* GetCurrentPatrolPoint() const { return PatrolPoints[SelectedPatrolPointIndex]; }
 
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE UEnemyBaseComponent* GetEnemyBase() const { return HealthComponent; }
 
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE bool IsGrounded() const { return bIsGrounded; };
+
+	UFUNCTION(BlueprintNativeEvent)
+		void ExecuteAttack1();		
 
 	UFUNCTION(BlueprintNativeEvent)
 		void FreezeAnimations();
@@ -84,11 +110,14 @@ public:
 		void RequestJump();
 
 	UFUNCTION(BlueprintNativeEvent)
-		void OnGroundEvent();
+		void OnGroundEvent2();
 
 	UFUNCTION(BlueprintCallable)
 		void FireJumpRequest();
 
+	UFUNCTION()
+		void SwitchPatrolPoint();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = AI)
 		TArray<AActor*> PatrolPoints;
 

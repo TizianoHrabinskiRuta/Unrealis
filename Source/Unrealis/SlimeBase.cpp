@@ -4,6 +4,7 @@
 #include "SlimeBase.h"
 #include "EnemyBaseComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "EnemyController.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -47,30 +48,57 @@ void ASlimeBase::BeginPlay()
 
 }
 
+#pragma region Movement Logic
+
+bool ASlimeBase::HasReachedDestination()
+{
+	if (FVector::Distance(GetActorLocation(), GetCurrentTarget()->GetActorLocation()) <= DistanceThreshold && !IsPlayerTheCurrentTarget()) { SwitchPatrolPoint(); GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Reached a point")); return true; }
+	return false;
+}
 
 void ASlimeBase::OnPlayerCaught(APawn* CaughtPawn)
 {
+	CaughtPlayer = CaughtPawn;
+}
 
-	AEnemyController* SelfController = Cast<AEnemyController>(GetController());
+AActor* ASlimeBase::GetCurrentTarget()
+{
+	if (!CaughtPlayer) return GetCurrentPatrolPoint(); 
+	else return CaughtPlayer;
+}
 
-	if (SelfController)
-	{
-		SelfController->SetPlayerCaught(CaughtPawn);
-	}
+bool ASlimeBase::IsPlayerTheCurrentTarget()
+{
+	if(CaughtPlayer)
+	return true;
+
+	return false;
 }
 
 void ASlimeBase::FireJumpRequest()
 {
-	OnJumpRequest.Broadcast(this); 
+	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), GetCurrentTarget()->GetActorLocation()));
+
+	FVector VectorialForwardsForceToApply = FVector();
+	VectorialForwardsForceToApply += GetActorForwardVector() * ForwardsForceToApply;
+
+	FVector VectorialUpwardsForceToApply = FVector(0.f, 0.f, UpwardsForceToApply);
+
+	UPrimitiveComponent* OwnerPrimitive = Cast<UPrimitiveComponent>(GetRootComponent());
+
+	OwnerPrimitive->AddImpulse(VectorialUpwardsForceToApply);
+	OwnerPrimitive->AddImpulse(VectorialForwardsForceToApply);
+
 }
 
+#pragma endregion
 
 #pragma region BlueprintNativeEvents
 void ASlimeBase::OnDeathCallback_Implementation()
 {
 	Destroy();
 }
-void ASlimeBase::OnGroundEvent_Implementation()
+void ASlimeBase::OnGroundEvent2_Implementation()
 {
 
 }
@@ -82,7 +110,7 @@ void ASlimeBase::ExecuteAttack1_Implementation()
 
 void ASlimeBase::FreezeAnimations_Implementation()
 {
-
+	
 }
 
 void ASlimeBase::UnfreezeAnimations_Implementation()
@@ -98,13 +126,12 @@ void ASlimeBase::RequestJump_Implementation()
 #pragma endregion
 
 
-
-
 // Called every frame
 void ASlimeBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	HasReachedDestination();
 }
 
 // Called to bind functionality to input
@@ -117,7 +144,13 @@ void ASlimeBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void ASlimeBase::CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {	
-	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent();  bIsGrounded = false; return; }
+	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent2();  bIsGrounded = false; return; }
 	
 	return;
+}
+
+void ASlimeBase::SwitchPatrolPoint()
+{
+	if (SelectedPatrolPointIndex + 1 > (PatrolPoints.Num() - 1)) SelectedPatrolPointIndex = 0;
+	else SelectedPatrolPointIndex++;
 }

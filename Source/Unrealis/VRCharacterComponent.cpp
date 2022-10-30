@@ -52,7 +52,7 @@ void UVRCharacterComponent::CallElementChangeEvent()
 
 void UVRCharacterComponent::TakeDamage(float Damage)
 {
-	this->Health -= Damage;
+	this->Health -= Damage * DefenseMultiplier;
 	OnDamaged.Broadcast(Damage);
 
 	if (Health <= 0)
