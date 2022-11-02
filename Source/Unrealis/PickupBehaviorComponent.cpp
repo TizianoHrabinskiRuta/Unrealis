@@ -15,7 +15,7 @@ UPickupBehaviorComponent::UPickupBehaviorComponent()
 	if (GetOwner())
 		SpherePickupRadius->SetupAttachment(GetOwner()->GetRootComponent());
 
-	SpherePickupRadius->InitSphereRadius(200.f);
+	SpherePickupRadius->InitSphereRadius(400.f);
 }
 
 

@@ -4,6 +4,7 @@
 #include "LightningAttack.h"
 #include "EnemyBaseComponent.h"
 #include "AIEnemyBase.h"
+#include "SlimeBase.h"
 #include "DebuggingPawn.h"
 
 // Sets default values
@@ -79,6 +80,8 @@ void ALightningAttack::CheckForColission(FVector SpawnLocation, FVector Forwards
 		for (auto h : HitResultReturn)
 		{
 			if (Cast<AAIEnemyBase>(h.GetActor())) Cast<AAIEnemyBase>(h.GetActor())->GetEnemyBase()->TakeDamage(this->Damage);
+
+			if (Cast<ASlimeBase>(h.GetActor())) { Cast<ASlimeBase>(h.GetActor())->GetEnemyBase()->TakeDamage(this->Damage); return; }
 
 			if (Cast<ADebuggingPawn>(h.GetActor())) ShowMessage(TEXT("Hit self again"));
 		}

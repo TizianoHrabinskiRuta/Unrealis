@@ -3,6 +3,7 @@
 
 #include "Fireball.h"
 #include "EnemyBaseComponent.h"
+#include "SlimeBase.h"
 #include "AIEnemyBase.h"
 
 // Sets default values
@@ -32,12 +33,22 @@ void AFireball::BeginPlay()
 void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {	
-
 	if (OtherActor->ActorHasTag("EnemyTag"))
 	{
-		UEnemyBaseComponent* Base = Cast<AAIEnemyBase>(OtherActor)->GetEnemyBase();
-		if (Base)
+		if (Cast<AAIEnemyBase>(OtherActor))
+		{
+			UEnemyBaseComponent* Base = Cast<AAIEnemyBase>(OtherActor)->GetEnemyBase();
+
 			Base->TakeDamage(this->Damage);
+		}
+		else
+		{
+			UEnemyBaseComponent* SlimeBase = Cast<ASlimeBase>(OtherActor)->GetEnemyBase();
+			if (SlimeBase)
+			{
+				SlimeBase->TakeDamage(this->Damage);
+			}
+		}
 	}
 
 	if (!OtherActor->ActorHasTag("PlayerTag"))
