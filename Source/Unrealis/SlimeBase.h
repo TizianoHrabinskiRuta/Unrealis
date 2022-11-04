@@ -9,6 +9,12 @@
 #include "Perception/PawnSensingComponent.h"
 #include "SlimeBase.generated.h"
 
+
+
+
+
+//make a base class that would represent an item in the world, and force that to be passed to the function, which will spawn them in the world
+
 UCLASS()
 class UNREALIS_API ASlimeBase : public APawn
 {
@@ -17,8 +23,8 @@ class UNREALIS_API ASlimeBase : public APawn
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FRotationUpdatedDelegate);
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInitiateJumpDelegate, AActor*, Caller);
 		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHasBeenGroundedDelegate);
-
-
+		
+		
 public:
 	// Sets default values for this pawn's properties
 	ASlimeBase();
@@ -26,12 +32,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBehaviorTree* Tree;
 
+	
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintNativeEvent)
-		void OnDeathCallback();
+		void OnDeathCallback();	
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyBaseComponent* HealthComponent;	
@@ -64,6 +72,8 @@ private:
 
 	UFUNCTION()
 		void CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);		
+
+	
 
 	UPROPERTY()
 		AActor* CaughtPlayer;

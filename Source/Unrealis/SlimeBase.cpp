@@ -5,6 +5,7 @@
 #include "EnemyBaseComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "EnemyController.h"
 #include "Perception/PawnSensingComponent.h"
 
@@ -44,11 +45,15 @@ void ASlimeBase::BeginPlay()
 	this->PawnSensor->OnSeePawn.AddDynamic(this, &ASlimeBase::OnPlayerCaught);
 
 	if (Hitbox) Hitbox->OnComponentHit.AddDynamic(this, &ASlimeBase::CheckForGroundHit);
-	
-
 }
 
 #pragma region Movement Logic
+
+void ASlimeBase::SwitchPatrolPoint()
+{
+	if (SelectedPatrolPointIndex + 1 > (PatrolPoints.Num() - 1)) SelectedPatrolPointIndex = 0;
+	else SelectedPatrolPointIndex++;
+}
 
 bool ASlimeBase::HasReachedDestination()
 {
@@ -125,7 +130,6 @@ void ASlimeBase::RequestJump_Implementation()
 
 #pragma endregion
 
-
 // Called every frame
 void ASlimeBase::Tick(float DeltaTime)
 {
@@ -141,16 +145,9 @@ void ASlimeBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 }
 
-
 void ASlimeBase::CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {	
-	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent2();  bIsGrounded = false; return; }
-	
+	if (OtherActor->ActorHasTag("FloorTag")) { bIsGrounded = true; OnGround.Broadcast(); OnGroundEvent2();  bIsGrounded = false; }	
 	return;
 }
 
-void ASlimeBase::SwitchPatrolPoint()
-{
-	if (SelectedPatrolPointIndex + 1 > (PatrolPoints.Num() - 1)) SelectedPatrolPointIndex = 0;
-	else SelectedPatrolPointIndex++;
-}
