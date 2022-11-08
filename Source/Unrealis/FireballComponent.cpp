@@ -57,7 +57,7 @@ bool UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, fl
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed to spawn fireball"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to spawn fireball @FireballComponent"));
 		return false;
 	}	
 }
