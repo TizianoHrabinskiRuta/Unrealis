@@ -57,17 +57,75 @@ void AEnemyEncounterManager::BeginPlay()
 
 }
 
-// Called every frame
-void AEnemyEncounterManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void AEnemyEncounterManager::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->ActorHasTag("PlayerTag") && !EncounterHasStarted) { SpawnEnemies(); EncounterHasStarted = true; }
+}
+
+void AEnemyEncounterManager::SpawnEnemies()
+{
+	if (!CanInitiateEncounter) return;
+	if (EncounterHasStarted) return;
+
+	EncounterHasStarted = true;
+
+
+	for (int i = 0; i <= NumberOfEnemiesToSpawn; i++)
+	{
+
+		if (UKismetMathLibrary::RandomBool())
+		{
+			if (Enemy1_IsSlimeBase)
+			{
+				if (!SpawnSlimeBase(Enemy1)) break;
+			}
+			else
+			{
+				if (!SpawnEnemyBase(Enemy1)) break;
+			}
+		}
+
+		else
+		{
+			if (Enemy2_IsSlimeBase)
+			{
+				if (!SpawnSlimeBase(Enemy2)) break;
+			}
+			else
+			{
+				if (!SpawnEnemyBase(Enemy2)) break;
+			}
+		}
+	}
+}
+
+FVector AEnemyEncounterManager::GetRandomSpawnPointLocation()
+{
+	int Random = UKismetMathLibrary::RandomIntegerInRange(1, 4);
+	FVector ReturningVector = FVector();
+
+	switch (Random)
+	{
+	case 1:
+		ReturningVector = SpawnPoint1->GetComponentLocation();
+		break;
+
+	case 2:
+		ReturningVector = SpawnPoint2->GetComponentLocation();
+		break;
+
+	case 3:
+		ReturningVector = SpawnPoint3->GetComponentLocation();
+		break;
+
+	case 4:
+		ReturningVector = SpawnPoint4->GetComponentLocation();
+		break;
+	}
+
+
+	return ReturningVector;
 }
 
 TArray<AActor*> AEnemyEncounterManager::GenerateRandomPatrolPoints(int NumberOfPatrolPoints)
@@ -85,34 +143,6 @@ TArray<AActor*> AEnemyEncounterManager::GenerateRandomPatrolPoints(int NumberOfP
 	}
 
 	return ReturningArray;
-}
-
-FVector AEnemyEncounterManager::GetRandomSpawnPointLocation()
-{
-	int Random = UKismetMathLibrary::RandomIntegerInRange(1, 4);
-	FVector ReturningVector = FVector();
-
-	switch (Random)
-	{
-		case 1:
-			ReturningVector = SpawnPoint1->GetComponentLocation();
-			break;
-
-		case 2:
-			ReturningVector = SpawnPoint2->GetComponentLocation();
-			break;
-
-		case 3:
-			ReturningVector = SpawnPoint3->GetComponentLocation();
-			break;
-
-		case 4:
-			ReturningVector = SpawnPoint4->GetComponentLocation();
-			break;
-	}
-
-
-	return ReturningVector;
 }
 
 bool AEnemyEncounterManager::SpawnSlimeBase(TSubclassOf<AActor> Reference)
@@ -161,43 +191,6 @@ bool AEnemyEncounterManager::SpawnEnemyBase(TSubclassOf<AActor> Reference)
 	return true;
 }
 
-void AEnemyEncounterManager::SpawnEnemies()
-{
-	if (!CanInitiateEncounter) return;
-	if (EncounterHasStarted) return;
-
-	EncounterHasStarted = true;
-
-
-	for (int i = 0; i <= NumberOfEnemiesToSpawn; i++)
-	{
-
-		if (UKismetMathLibrary::RandomBool())
-		{
-			if (Enemy1_IsSlimeBase)
-			{
-				if (!SpawnSlimeBase(Enemy1)) break;
-			}
-			else
-			{
-				if (!SpawnEnemyBase(Enemy1)) break;
-			}
-		}
-
-		else
-		{
-			if (Enemy2_IsSlimeBase)
-			{
-				if (!SpawnSlimeBase(Enemy2)) break;
-			}
-			else
-			{
-				if (!SpawnEnemyBase(Enemy2)) break;
-			}
-		}
-	}
-}
-
 void AEnemyEncounterManager::TimerCallback()
 {
 	FinishEncounter();
@@ -210,4 +203,10 @@ void AEnemyEncounterManager::FinishEncounter()
 
 void AEnemyEncounterManager::OnEncounterFinish_Implementation()
 {
+}
+
+void AEnemyEncounterManager::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
 }
