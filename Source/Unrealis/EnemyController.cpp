@@ -18,12 +18,27 @@ AEnemyController::AEnemyController()
 	LocationToGoKey = "LocationToGo";
 	PlayerKey = "Target";
 
+
 	CurrentPatrolPoint = 0;
+}
+
+void AEnemyController::OverrideDefaultPatrolPoints(TArray<AActor*> InPatrolPoints)
+{
+
+	if(!InternalPatrolPoints.IsEmpty())
+		InternalPatrolPoints.Empty();
+
+	for (auto h : InPatrolPoints)
+	{
+		InternalPatrolPoints.Add(h);
+	}
 }
 
 void AEnemyController::OnPossess(APawn* PossessedPawn)
 {
 	Super::OnPossess(PossessedPawn);
+
+	//add message on possess
 
 	OwnerRef = Cast<AAIEnemyBase>(PossessedPawn);
 	

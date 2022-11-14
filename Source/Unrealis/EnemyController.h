@@ -36,10 +36,7 @@ protected:
 		FName LocationToGoKey;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		FName PlayerKey;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		TArray<AActor*> InternalPatrolPoints;
+		FName PlayerKey;	
 
 	UPROPERTY()
 		class AAIEnemyBase* OwnerRef;
@@ -51,6 +48,9 @@ public:
 
 	UFUNCTION()
 		void SetPlayerCaught(APawn* CaughtPawn);
+
+	UFUNCTION(BlueprintCallable)
+		void OverrideDefaultPatrolPoints(TArray<AActor*> InPatrolPoints);
 
 	UFUNCTION()
 		FORCEINLINE UBlackboardComponent* GetBlackboard() const { return BlackboardComp; }
@@ -66,6 +66,9 @@ public:
 
 	UFUNCTION()
 		FORCEINLINE ASlimeBase* GetSlimeControllerOwner() const { return SlimeOwnerRef; }
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		TArray<AActor*> InternalPatrolPoints;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		int32 CurrentPatrolPoint = 0;

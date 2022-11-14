@@ -14,6 +14,8 @@ AAIEnemyBase::AAIEnemyBase()
 
 	HealthComponent = CreateDefaultSubobject<UEnemyBaseComponent>(TEXT("EnemyBase"));
 	PawnSensor = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensor"));
+	
+	AIControllerClass = FindObject<UClass>(ANY_PACKAGE, TEXT("AEnemyController"));
 
 }
 
@@ -28,6 +30,7 @@ void AAIEnemyBase::BeginPlay()
 	{
 		SelfController->OnAttack1Call.AddDynamic(this, &AAIEnemyBase::ExecuteAttack1);
 	}
+	
 
 	if (HealthComponent)
 		this->HealthComponent->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback); else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Didnt instance EBC correctly @AIEnemyBase"));

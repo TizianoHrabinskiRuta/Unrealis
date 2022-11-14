@@ -29,6 +29,10 @@ public:
 	// Sets default values for this pawn's properties
 	ASlimeBase();
 
+	UFUNCTION(BlueprintCallable)
+		void OverrideDefaultPatrolPoints(TArray<AActor*>InPatrolPoints);
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBehaviorTree* Tree;
 

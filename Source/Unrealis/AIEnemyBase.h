@@ -28,7 +28,7 @@ protected:
 		void OnDeathCallback();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class UEnemyBaseComponent* HealthComponent;	//This is giving errors again, change the name to something i wont use anywhere else again so it might stop (im so tired of this)
+		class UEnemyBaseComponent* HealthComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UPawnSensingComponent* PawnSensor;

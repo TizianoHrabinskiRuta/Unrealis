@@ -57,7 +57,12 @@ void ASlimeBase::SwitchPatrolPoint()
 
 bool ASlimeBase::HasReachedDestination()
 {
-	if (FVector::Distance(GetActorLocation(), GetCurrentTarget()->GetActorLocation()) <= DistanceThreshold && !IsPlayerTheCurrentTarget()) { SwitchPatrolPoint(); GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Reached a point")); return true; }
+	if (FVector::Distance(GetActorLocation(), GetCurrentTarget()->GetActorLocation()) <= DistanceThreshold && !IsPlayerTheCurrentTarget()) 
+	{ 
+		SwitchPatrolPoint();
+	    return true; 
+	}
+
 	return false;
 }
 
@@ -151,3 +156,13 @@ void ASlimeBase::CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* Ot
 	return;
 }
 
+void ASlimeBase::OverrideDefaultPatrolPoints(TArray<AActor*> InPatrolPoints)
+{
+	PatrolPoints.Empty();
+	SelectedPatrolPointIndex = 0;
+
+	for (auto h : InPatrolPoints)
+	{
+		PatrolPoints.Add(h);
+	}
+}
