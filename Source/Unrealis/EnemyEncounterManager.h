@@ -30,16 +30,16 @@ public:
 	UPROPERTY(EditInstanceOnly, meta = (DisplayName = "Is Slimebase", ToolTip = "Is this enemy an instance of SlimeBase"))
 		bool Enemy2_IsSlimeBase = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensuse the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
 		UStaticMeshComponent* SpawnPoint1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensuse the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
 		UStaticMeshComponent* SpawnPoint2;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensuse the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
 		UStaticMeshComponent* SpawnPoint3;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensuse the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
 		UStaticMeshComponent* SpawnPoint4;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -58,7 +58,7 @@ public:
 		int NumberOfEnemiesToSpawn = 4;
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (ToolTip = "How many enemies the player has to kill before the encounter is considered to be won or finished"))
-		int MinimumEnemyKillCount = NumberOfEnemiesToSpawn;
+		int MinimumEnemyKillCount = NumberOfEnemiesToSpawn;		
 
 
 
@@ -100,6 +100,9 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent)
 		void OnEncounterFinish();
+
+	UFUNCTION(BlueprintNativeEvent)
+		void OnEncounterStart();
 
 	UPROPERTY()
 		FTimerHandle EncounterTimerHandle;

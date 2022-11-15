@@ -184,7 +184,7 @@ bool AEnemyEncounterManager::SpawnEnemyBase(TSubclassOf<AActor> Reference)
 		InstancedController->Possess(SpawnedInstance);
 
 	if (SpawnedInstance->GetController() != nullptr) Cast<AEnemyController>(SpawnedInstance->GetController())->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
-	else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No controller registered for instanced AAIEnemyBase subclass @EnemyEncounterManager"));
+		else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No controller registered for instanced AAIEnemyBase subclass @EnemyEncounterManager"));
 	
 	SpawnedInstance->GetEnemyBase()->OnDeath.AddDynamic(this, &AEnemyEncounterManager::OnDeathCallback);
 
@@ -204,6 +204,9 @@ void AEnemyEncounterManager::FinishEncounter()
 void AEnemyEncounterManager::OnEncounterFinish_Implementation()
 {
 }
+
+void AEnemyEncounterManager::OnEncounterStart_Implementation()
+{}
 
 void AEnemyEncounterManager::Tick(float DeltaTime)
 {
