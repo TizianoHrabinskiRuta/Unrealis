@@ -73,6 +73,8 @@ void ALightningAttack::CheckForColission(FVector SpawnLocation, FVector Forwards
 
 	FVector BeamEnd = CalcSpawnLocation + ForwardsVector * Length;
 
+	Passer.Broadcast(BeamEnd, SpawnLocation);
+
 	DrawDebugLine(GetWorld(), CalcSpawnLocation, BeamEnd, FColor::Red, false, 5.f);
 
 	if (GetWorld()->LineTraceMultiByChannel(HitResultReturn, CalcSpawnLocation, BeamEnd, ECC_Visibility, QueryParams))

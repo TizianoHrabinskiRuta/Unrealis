@@ -46,6 +46,8 @@ void ULightningAttackComponent::FireLightning(UStaticMesh* GFXMesh, FVector Spaw
 	
 
 	ALightningAttack* SpawnedLightning = GetWorld()->SpawnActor<ALightningAttack>(SpawnLocation, SpawnRotation);
+
+	SpawnedLightning->Passer.AddDynamic(this, &ULightningAttackComponent::DataReciever);
 	SpawnedLightning->SetParams(GFXMesh, SpawnRotation);
 	SpawnedLightning->SetDamage(AttackDamage);
 	SpawnedLightning->CheckForColission(SpawnLocation, ForwardsVector, SpawnRotation, OwnerReference);
