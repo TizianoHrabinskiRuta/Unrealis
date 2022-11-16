@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "TargetPointBase.h"
 #include "EnemyEncounterManager.generated.h"
 
 UCLASS()
@@ -16,7 +17,7 @@ public:
 	AEnemyEncounterManager();
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (ToolTip = "What patrol points can be assigned to the spawned enemies"))
-		TArray<AActor*> PresetPatrolPoints;
+		TArray<ATargetPointBase*> PresetPatrolPoints;
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly)
 		TSubclassOf<AActor> Enemy1;
@@ -30,19 +31,19 @@ public:
 	UPROPERTY(EditInstanceOnly, meta = (DisplayName = "Is Slimebase", ToolTip = "Is this enemy an instance of SlimeBase"))
 		bool Enemy2_IsSlimeBase = false;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
 		FVector SpawnPoint1;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
 		FVector SpawnPoint2;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
 		FVector SpawnPoint3;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
 		FVector SpawnPoint4;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = EncounterTrigger)
 		UStaticMeshComponent* EncounterTrigger;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

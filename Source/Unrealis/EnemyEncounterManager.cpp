@@ -43,6 +43,13 @@ void AEnemyEncounterManager::BeginPlay()
 		return; 
 	}
 
+	if (NumberOfEnemiesToSpawn < MinimumEnemyKillCount)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("More enemies need to be killed than will spawn @EnemyEncounterManager"));
+		CanInitiateEncounter = false;
+		return;
+	}
+
 
 	if (SpawnOnPlay)SpawnEnemies();
 
@@ -130,7 +137,7 @@ TArray<AActor*> AEnemyEncounterManager::GenerateRandomPatrolPoints(int NumberOfP
 	{
 		RandomNumber = UKismetMathLibrary::RandomIntegerInRange(0, PresetPatrolPoints.Num() - 1);
 
-		ReturningArray.Add(PresetPatrolPoints[RandomNumber]);
+		ReturningArray.Add(Cast<AActor>(PresetPatrolPoints[RandomNumber]));
 	}
 
 	return ReturningArray;
