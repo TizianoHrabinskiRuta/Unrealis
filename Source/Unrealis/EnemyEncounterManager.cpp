@@ -17,19 +17,10 @@ AEnemyEncounterManager::AEnemyEncounterManager()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
-	SpawnPoint1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpawnPoint1"));
-	SpawnPoint2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpawnPoint2"));
-	SpawnPoint3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpawnPoint3")); 
-	SpawnPoint4 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("SpawnPoint4"));
-
 	EncounterTrigger = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("EncounterTrigger"));
 
 	EncounterTrigger->SetupAttachment(RootComponent);
-	SpawnPoint1->SetupAttachment(RootComponent);
-	SpawnPoint2->SetupAttachment(RootComponent);
-	SpawnPoint3->SetupAttachment(RootComponent);
-	SpawnPoint4->SetupAttachment(RootComponent);
-
+	
 }
 
 // Called when the game starts or when spawned
@@ -108,19 +99,19 @@ FVector AEnemyEncounterManager::GetRandomSpawnPointLocation()
 	switch (Random)
 	{
 	case 1:
-		ReturningVector = SpawnPoint1->GetComponentLocation();
+		ReturningVector = SpawnPoint1;
 		break;
 
 	case 2:
-		ReturningVector = SpawnPoint2->GetComponentLocation();
+		ReturningVector = SpawnPoint2;
 		break;
 
 	case 3:
-		ReturningVector = SpawnPoint3->GetComponentLocation();
+		ReturningVector = SpawnPoint3;
 		break;
 
 	case 4:
-		ReturningVector = SpawnPoint4->GetComponentLocation();
+		ReturningVector = SpawnPoint4;
 		break;
 	}
 

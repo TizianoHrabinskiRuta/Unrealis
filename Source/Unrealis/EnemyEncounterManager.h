@@ -30,17 +30,17 @@ public:
 	UPROPERTY(EditInstanceOnly, meta = (DisplayName = "Is Slimebase", ToolTip = "Is this enemy an instance of SlimeBase"))
 		bool Enemy2_IsSlimeBase = false;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
-		UStaticMeshComponent* SpawnPoint1;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+		FVector SpawnPoint1;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
-		UStaticMeshComponent* SpawnPoint2;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+		FVector SpawnPoint2;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
-		UStaticMeshComponent* SpawnPoint3;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+		FVector SpawnPoint3;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground"))
-		UStaticMeshComponent* SpawnPoint4;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+		FVector SpawnPoint4;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		UStaticMeshComponent* EncounterTrigger;
