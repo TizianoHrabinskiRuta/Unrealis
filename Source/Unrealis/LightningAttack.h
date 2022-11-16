@@ -11,10 +11,13 @@ class UNREALIS_API ALightningAttack : public AActor
 {
 	GENERATED_BODY()
 
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnSummon, FVector, LightningEnd, FVector, LightningStart);
+
 public:
 	// Sets default values for this actor's properties
 	ALightningAttack();
 
+	FOnSummon Passer;
 	
 
 protected:
@@ -37,6 +40,8 @@ protected:
 	//Look into UMaterial (maybe pass as param on component?) and try to access its opacity so a loop can decrease it until it is invisible, then destroy
 
 	FTimerHandle GFXOpacityHandle;
+
+	
 
 public:	
 
