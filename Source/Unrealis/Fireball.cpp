@@ -12,7 +12,6 @@ AFireball::AFireball()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Tags.Add(TEXT("Fireball"));
 
 	this->Hitbox = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hitbox"));
 	this->GFX = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GFX"));
@@ -29,6 +28,8 @@ void AFireball::BeginPlay()
 {
 	Super::BeginPlay();
 	this->Hitbox->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
+	Hitbox->ComponentTags.Add(TEXT("Fireball"));
+
 	
 }
 
@@ -51,6 +52,12 @@ void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class 
 				SlimeBase->TakeDamage(this->Damage);
 			}
 		}
+	}
+
+	if (OtherActor->ActorHasTag("FireballDestructibleWall"))
+	{
+		printf ("HOLA");
+		OtherActor->Destroy();
 	}
 
 	if (!OtherActor->ActorHasTag("PlayerTag"))
