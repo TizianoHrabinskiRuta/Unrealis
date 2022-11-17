@@ -50,6 +50,14 @@ void AEnemyEncounterManager::BeginPlay()
 		return;
 	}
 
+	for (auto h : PresetPatrolPoints) 
+		if (h == nullptr) 
+		{ 
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("An index in the PresetPatrolPoints array is empty. Either delete it or assign a patrol point to it @EnemyEncounterManager")); 
+			CanInitiateEncounter = false; 
+			return; 
+		}
+
 
 	if (SpawnOnPlay)SpawnEnemies();
 
