@@ -29,6 +29,13 @@ void AEnemyEncounterManager::BeginPlay()
 	Super::BeginPlay();
 	EncounterTrigger->OnComponentBeginOverlap.AddDynamic(this, &AEnemyEncounterManager::OnOverlapBegin);
 
+	if (AutomaticallyCallVictory)
+	{
+		OnEncounterFinish();
+		return;
+	}
+
+
 	if (PresetPatrolPoints.IsEmpty()) 
 	{ 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No patrol points given for assignment @EnemyEncounterManager")); 
@@ -77,18 +84,26 @@ void AEnemyEncounterManager::SpawnEnemies()
 	EncounterHasStarted = true;
 
 
-	for (int i = 0; i <= NumberOfEnemiesToSpawn; i++)
+	for (int i = 0; i < NumberOfEnemiesToSpawn; i++)
 	{
 
 		if (UKismetMathLibrary::RandomBool())
 		{
 			if (Enemy1_IsSlimeBase)
 			{
-				if (!SpawnSlimeBase(Enemy1)) break;
+				if (!SpawnSlimeBase(Enemy1))
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to spawn @EnemyEncounterManager"));
+					break;
+				}
 			}
 			else
 			{
-				if (!SpawnEnemyBase(Enemy1)) break;
+				if (!SpawnEnemyBase(Enemy1)) 
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to spawn @EnemyEncounterManager"));
+					break;
+				}
 			}
 		}
 
@@ -96,11 +111,19 @@ void AEnemyEncounterManager::SpawnEnemies()
 		{
 			if (Enemy2_IsSlimeBase)
 			{
-				if (!SpawnSlimeBase(Enemy2)) break;
+				if (!SpawnSlimeBase(Enemy2)) 
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to spawn @EnemyEncounterManager"));
+					break;
+				}
 			}
 			else
 			{
-				if (!SpawnEnemyBase(Enemy2)) break;
+				if (!SpawnEnemyBase(Enemy2)) 
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to spawn @EnemyEncounterManager"));
+					break;
+				}
 			}
 		}
 	}
@@ -155,6 +178,7 @@ bool AEnemyEncounterManager::SpawnSlimeBase(TSubclassOf<AActor> Reference)
 {
 	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	SpawnParams.bNoFail = true;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	ASlimeBase* SpawnedInstance = GetWorld()->SpawnActor<ASlimeBase>(Reference, GetRandomSpawnPointLocation(), FRotator(0, 0, 0), SpawnParams);
 	if (!SpawnedInstance)
@@ -173,6 +197,7 @@ bool AEnemyEncounterManager::SpawnEnemyBase(TSubclassOf<AActor> Reference)
 {
 	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	SpawnParams.bNoFail = true;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 	AAIEnemyBase* SpawnedInstance = GetWorld()->SpawnActor<AAIEnemyBase>(Reference, GetRandomSpawnPointLocation(), FRotator(0, 0, 0), SpawnParams);
 	if (!SpawnedInstance)

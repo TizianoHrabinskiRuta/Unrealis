@@ -48,12 +48,15 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool ShouldHaveTimeLimit = false;
+
+	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (EditCondition = "ShouldHaveTimeLimit", ToolTip = "How long before the encounter is finished, in seconds."))
+		int TimeLimit = NULL;
 	
 	UPROPERTY(EditAnywhere)
 		bool SpawnOnPlay = false;
 
-	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (EditCondition = "ShouldHaveTimeLimit", ToolTip = "How long before the encounter is finished, in seconds."))
-		int TimeLimit = NULL;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ToolTip = "This is for debugging purposes only"))
+		bool AutomaticallyCallVictory = false;	
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly)
 		int NumberOfEnemiesToSpawn = 4;
