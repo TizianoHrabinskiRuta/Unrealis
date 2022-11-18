@@ -114,19 +114,19 @@ FVector AEnemyEncounterManager::GetRandomSpawnPointLocation()
 	switch (Random)
 	{
 	case 1:
-		ReturningVector = SpawnPoint1;
+		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint1);
 		break;
 
 	case 2:
-		ReturningVector = SpawnPoint2;
+		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint2);
 		break;
 
 	case 3:
-		ReturningVector = SpawnPoint3;
+		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint3);
 		break;
 
 	case 4:
-		ReturningVector = SpawnPoint4;
+		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint4);
 		break;
 	}
 

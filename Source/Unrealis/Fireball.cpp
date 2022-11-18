@@ -28,9 +28,7 @@ void AFireball::BeginPlay()
 {
 	Super::BeginPlay();
 	this->Hitbox->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
-	Hitbox->ComponentTags.Add(TEXT("Fireball"));
-
-	
+	this->Tags.Add(TEXT("Fireball"));	
 }
 
 void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
@@ -56,7 +54,7 @@ void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class 
 
 	if (OtherActor->ActorHasTag("FireballDestructibleWall"))
 	{
-		printf ("HOLA");
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Hit a destructible wall"));
 		OtherActor->Destroy();
 	}
 
