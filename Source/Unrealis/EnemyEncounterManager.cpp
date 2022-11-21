@@ -9,7 +9,6 @@
 #include "Kismet/KismetMathLibrary.h"
 
 
-// Sets default values
 AEnemyEncounterManager::AEnemyEncounterManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
@@ -23,7 +22,6 @@ AEnemyEncounterManager::AEnemyEncounterManager()
 	
 }
 
-// Called when the game starts or when spawned
 void AEnemyEncounterManager::BeginPlay()
 {
 	Super::BeginPlay();
@@ -35,12 +33,18 @@ void AEnemyEncounterManager::BeginPlay()
 		return;
 	}
 
-
 	if (PresetPatrolPoints.IsEmpty()) 
 	{ 
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No patrol points given for assignment @EnemyEncounterManager")); 
 		CanInitiateEncounter = false;
 		return; 
+	}
+
+	if (SpawnPoints.IsEmpty())
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No spawn points to assign @EnemyEncounterManager"));
+		CanInitiateEncounter = false;
+		return;
 	}
 
 	if (ShouldHaveTimeLimit && TimeLimit == NULL) 
@@ -66,7 +70,7 @@ void AEnemyEncounterManager::BeginPlay()
 		}
 
 
-	if (SpawnOnPlay)SpawnEnemies();
+	if (SpawnOnPlay) SpawnEnemies();
 
 }
 
@@ -131,30 +135,16 @@ void AEnemyEncounterManager::SpawnEnemies()
 
 FVector AEnemyEncounterManager::GetRandomSpawnPointLocation()
 {
-	int Random = UKismetMathLibrary::RandomIntegerInRange(1, 4);
-	FVector ReturningVector = FVector();
-
-	switch (Random)
+	int Random;
+	
+	do
 	{
-	case 1:
-		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint1);
-		break;
+		 Random = UKismetMathLibrary::RandomIntegerInRange(0, SpawnPoints.Num() - 1);
+	} while (Random == PreviousSpawnPointIndex);
+	
+	PreviousSpawnPointIndex = Random;
 
-	case 2:
-		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint2);
-		break;
-
-	case 3:
-		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint3);
-		break;
-
-	case 4:
-		ReturningVector = UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoint4);
-		break;
-	}
-
-
-	return ReturningVector;
+	return UKismetMathLibrary::TransformLocation(GetActorTransform(), SpawnPoints[Random]); 
 }
 
 TArray<AActor*> AEnemyEncounterManager::GenerateRandomPatrolPoints(int NumberOfPatrolPoints)
@@ -163,12 +153,14 @@ TArray<AActor*> AEnemyEncounterManager::GenerateRandomPatrolPoints(int NumberOfP
 
 
 	int RandomNumber = 0;
+	int PreviousNumber = -1;
 
-	for (int i = 0; i < NumberOfPatrolPoints; i++)
+	while (ReturningArray.Num() < NumberOfPatrolPoints)
 	{
 		RandomNumber = UKismetMathLibrary::RandomIntegerInRange(0, PresetPatrolPoints.Num() - 1);
+		if (RandomNumber == PreviousNumber) continue;
 
-		ReturningArray.Add(Cast<AActor>(PresetPatrolPoints[RandomNumber]));
+		ReturningArray.Add(PresetPatrolPoints[RandomNumber]);
 	}
 
 	return ReturningArray;
@@ -237,10 +229,11 @@ void AEnemyEncounterManager::OnEncounterFinish_Implementation()
 }
 
 void AEnemyEncounterManager::OnEncounterStart_Implementation()
-{}
+{
+}
 
 void AEnemyEncounterManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
+} 

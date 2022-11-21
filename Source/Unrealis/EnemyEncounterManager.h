@@ -7,6 +7,10 @@
 #include "TargetPointBase.h"
 #include "EnemyEncounterManager.generated.h"
 
+
+
+//UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+
 UCLASS()
 class UNREALIS_API AEnemyEncounterManager : public AActor
 {
@@ -19,6 +23,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (ToolTip = "What patrol points can be assigned to the spawned enemies"))
 		TArray<ATargetPointBase*> PresetPatrolPoints;
 
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
+		TArray<FVector> SpawnPoints;
+
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly)
 		TSubclassOf<AActor> Enemy1;
 
@@ -30,18 +37,6 @@ public:
 
 	UPROPERTY(EditInstanceOnly, meta = (DisplayName = "Is Slimebase", ToolTip = "Is this enemy an instance of SlimeBase"))
 		bool Enemy2_IsSlimeBase = false;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
-		FVector SpawnPoint1;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
-		FVector SpawnPoint2;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
-		FVector SpawnPoint3;
-
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
-		FVector SpawnPoint4;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = EncounterTrigger)
 		UStaticMeshComponent* EncounterTrigger;
@@ -69,6 +64,12 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintCallable)
+		void Blueprint_InitiateEncounter()
+	{
+		SpawnEnemies();
+	}
 
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
@@ -114,13 +115,16 @@ protected:
 	UPROPERTY()
 		TArray<AActor*> SpawnedEnemies;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 		int KilledEnemies = 0;
 
 	UPROPERTY()
+		int PreviousSpawnPointIndex = 0;
+
+	UPROPERTY(BlueprintReadOnly)
 		bool EncounterHasStarted = false;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 		bool CanInitiateEncounter = true;
 
 	
