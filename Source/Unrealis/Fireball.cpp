@@ -16,6 +16,7 @@ AFireball::AFireball()
 	this->Hitbox = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hitbox"));
 	this->GFX = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("GFX"));
 
+
 	RootComponent = Hitbox;
 
 	GFX->SetupAttachment(RootComponent);
