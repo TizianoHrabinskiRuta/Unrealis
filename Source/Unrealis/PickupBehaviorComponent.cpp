@@ -14,6 +14,8 @@ UPickupBehaviorComponent::UPickupBehaviorComponent()
 
 	if (GetOwner())
 		SpherePickupRadius->SetupAttachment(GetOwner()->GetRootComponent());
+	else a = true;
+
 
 	SpherePickupRadius->InitSphereRadius(400.f);
 }
@@ -23,6 +25,12 @@ UPickupBehaviorComponent::UPickupBehaviorComponent()
 void UPickupBehaviorComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (GetOwner())
+		SpherePickupRadius->SetupAttachment(GetOwner()->GetRootComponent());
+
+	if(a)
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("hola jsadahdj"));
 
 	SpherePickupRadius->OnComponentBeginOverlap.AddDynamic(this, &UPickupBehaviorComponent::OnOverlapBegin);
 	// ...
@@ -35,6 +43,10 @@ void UPickupBehaviorComponent::OnOverlapBegin(class UPrimitiveComponent* Overlap
 	if (OtherActor->ActorHasTag("PlayerTag"))
 	{
 		OnPlayerPickup.Broadcast(OtherActor);
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("no player"));
 	}
 }
 

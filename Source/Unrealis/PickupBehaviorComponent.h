@@ -30,6 +30,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class USphereComponent* SpherePickupRadius;
 
+	bool a = false;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;

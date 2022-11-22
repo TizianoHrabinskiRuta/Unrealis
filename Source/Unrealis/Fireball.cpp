@@ -35,6 +35,8 @@ void AFireball::BeginPlay()
 void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {	
+
+	printf("a");
 	if (OtherActor->ActorHasTag("EnemyTag"))
 	{
 		if (Cast<AAIEnemyBase>(OtherActor))

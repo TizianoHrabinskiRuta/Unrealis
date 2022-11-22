@@ -68,7 +68,8 @@ bool ASlimeBase::HasReachedDestination()
 
 void ASlimeBase::OnPlayerCaught(APawn* CaughtPawn)
 {
-	CaughtPlayer = CaughtPawn;
+	if (CaughtPawn->ActorHasTag("PlayerTag"))
+	   CaughtPlayer = CaughtPawn;
 }
 
 AActor* ASlimeBase::GetCurrentTarget()
