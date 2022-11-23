@@ -36,7 +36,6 @@ void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class 
 	bool bFromSweep, const FHitResult& SweepResult)
 {	
 
-	printf("a");
 	if (OtherActor->ActorHasTag("EnemyTag"))
 	{
 		if (Cast<AAIEnemyBase>(OtherActor))
@@ -61,11 +60,15 @@ void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class 
 		OtherActor->Destroy();
 	}
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("pollo"));
+
 	if (!OtherActor->ActorHasTag("PlayerTag"))
 	{
 		OnDestruction.Broadcast(this);
 		Destroy();
 	}
+
+	
 }
 
 void AFireball::SetMovementParameters(float SpeedToSetTo, float _DesiredTranslations)

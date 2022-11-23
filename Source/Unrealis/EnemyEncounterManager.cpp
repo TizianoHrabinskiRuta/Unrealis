@@ -184,10 +184,10 @@ bool AEnemyEncounterManager::SpawnSlimeBase(TSubclassOf<AActor> Reference)
 	{
 		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsObject(TEXT("Target"), PlayerReference);
 		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsBool(TEXT("IsInstantAggro"), true);
+		SpawnedInstance->SetPlayerReference(Cast<AActor>(PlayerReference));
 	}
 
-	SpawnedInstance->SetPlayerReference(Cast<AActor>(PlayerReference));
-
+	
 	SpawnedInstance->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
 	SpawnedInstance->GetEnemyBase()->OnDeath.AddDynamic(this, &AEnemyEncounterManager::OnDeathCallback);
 
@@ -214,6 +214,7 @@ bool AEnemyEncounterManager::SpawnEnemyBase(TSubclassOf<AActor> Reference)
 
 	if(InstancedController)
 		InstancedController->Possess(SpawnedInstance);
+	else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("no controller for skellington"));
 
 	if (EnemiesAreInstantAggro)
 	{
@@ -221,7 +222,7 @@ bool AEnemyEncounterManager::SpawnEnemyBase(TSubclassOf<AActor> Reference)
 		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsBool(TEXT("IsInstantAggro"), true);
 	}
 
-	if (SpawnedInstance->GetController() != nullptr) Cast<AEnemyController>(SpawnedInstance->GetController())->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
+	if (InstancedController) InstancedController->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
 		else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No controller registered for instanced AAIEnemyBase subclass @EnemyEncounterManager"));
 	
 	SpawnedInstance->GetEnemyBase()->OnDeath.AddDynamic(this, &AEnemyEncounterManager::OnDeathCallback);
