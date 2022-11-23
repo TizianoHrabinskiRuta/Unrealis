@@ -3,6 +3,7 @@
 
 #include "PickupBehaviorComponent.h"
 #include "Components/SphereComponent.h"
+
 // Sets default values for this component's properties
 UPickupBehaviorComponent::UPickupBehaviorComponent()
 {
@@ -10,13 +11,12 @@ UPickupBehaviorComponent::UPickupBehaviorComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	SpherePickupRadius = CreateDefaultSubobject<USphereComponent>(TEXT("CapsulePickupRadius"));
-
+	SpherePickupRadius = CreateDefaultSubobject<USphereComponent>(TEXT("SpherePickupRadius"));
 	if (GetOwner())
 		SpherePickupRadius->SetupAttachment(GetOwner()->GetRootComponent());
-	else a = true;
 
-
+	SpherePickupRadius->SetVisibility(true);
+	
 	SpherePickupRadius->InitSphereRadius(400.f);
 }
 
@@ -27,11 +27,10 @@ void UPickupBehaviorComponent::BeginPlay()
 	Super::BeginPlay();
 
 	if (GetOwner())
-		SpherePickupRadius->SetupAttachment(GetOwner()->GetRootComponent());
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, GetOwner()->GetName());
 
-	if(a)
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("hola jsadahdj"));
-
+	
+	
 	SpherePickupRadius->OnComponentBeginOverlap.AddDynamic(this, &UPickupBehaviorComponent::OnOverlapBegin);
 	// ...
 	
