@@ -70,14 +70,14 @@ void AEnemyEncounterManager::BeginPlay()
 		}
 
 
-	if (SpawnOnPlay) SpawnEnemies();
+	if (SpawnOnPlay) { SpawnEnemies(); OnEncounterStart();	}
 
 }
 
 void AEnemyEncounterManager::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->ActorHasTag("PlayerTag") && !EncounterHasStarted) { SpawnEnemies(); EncounterHasStarted = true; }
+	if (OtherActor->ActorHasTag("PlayerTag") && !EncounterHasStarted) { SpawnEnemies(); EncounterHasStarted = true; OnEncounterStart(); }
 }
 
 void AEnemyEncounterManager::SpawnEnemies()
@@ -168,6 +168,7 @@ TArray<AActor*> AEnemyEncounterManager::GenerateRandomPatrolPoints(int NumberOfP
 
 bool AEnemyEncounterManager::SpawnSlimeBase(TSubclassOf<AActor> Reference)
 {
+
 	FActorSpawnParameters SpawnParams = FActorSpawnParameters();
 	SpawnParams.bNoFail = true;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -178,6 +179,14 @@ bool AEnemyEncounterManager::SpawnSlimeBase(TSubclassOf<AActor> Reference)
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("There was an error spawning in SlimeBase @EnemyEncounterManager"));
 		return false;
 	}
+
+	if (EnemiesAreInstantAggro)
+	{
+		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsObject(TEXT("Target"), PlayerReference);
+		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsBool(TEXT("IsInstantAggro"), true);
+	}
+
+	SpawnedInstance->SetPlayerReference(Cast<AActor>(PlayerReference));
 
 	SpawnedInstance->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
 	SpawnedInstance->GetEnemyBase()->OnDeath.AddDynamic(this, &AEnemyEncounterManager::OnDeathCallback);
@@ -205,6 +214,12 @@ bool AEnemyEncounterManager::SpawnEnemyBase(TSubclassOf<AActor> Reference)
 
 	if(InstancedController)
 		InstancedController->Possess(SpawnedInstance);
+
+	if (EnemiesAreInstantAggro)
+	{
+		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsObject(TEXT("Target"), PlayerReference);
+		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsBool(TEXT("IsInstantAggro"), true);
+	}
 
 	if (SpawnedInstance->GetController() != nullptr) Cast<AEnemyController>(SpawnedInstance->GetController())->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
 		else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No controller registered for instanced AAIEnemyBase subclass @EnemyEncounterManager"));

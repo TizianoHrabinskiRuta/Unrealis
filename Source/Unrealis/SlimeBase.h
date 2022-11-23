@@ -32,6 +32,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void OverrideDefaultPatrolPoints(TArray<AActor*>InPatrolPoints);
 
+	UFUNCTION()
+		FORCEINLINE void SetPlayerReference(AActor* InPlayerRef)
+	{
+		CaughtPlayer = InPlayerRef;
+	}
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBehaviorTree* Tree;
@@ -76,8 +82,6 @@ private:
 
 	UFUNCTION()
 		void CheckForGroundHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);		
-
-	
 
 	UPROPERTY()
 		AActor* CaughtPlayer;

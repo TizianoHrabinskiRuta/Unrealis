@@ -20,7 +20,13 @@ public:
 	// Sets default values for this actor's properties
 	AEnemyEncounterManager();
 
-	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (ToolTip = "What patrol points can be assigned to the spawned enemies"))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
+		bool EnemiesAreInstantAggro = false;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, meta = (EditCondition = "EnemiesAreInstantAggro"))
+		APawn* PlayerReference;
+
+	UPROPERTY(BlueprintReadWrite, EditInstanceOnly, meta = (ToolTip = "What patrol points can be assigned to the spawned enemies", EditCondition = "EnemiesAreInstantAggro==false"))
 		TArray<ATargetPointBase*> PresetPatrolPoints;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = SpawnPoints, meta = (ToolTip = "Ensure the spawn point has enough height to be able to spawn the enemy without clipping through the ground", MakeEditWidget = true))
