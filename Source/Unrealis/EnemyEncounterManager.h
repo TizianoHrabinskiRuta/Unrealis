@@ -33,13 +33,13 @@ public:
 		TArray<FVector> SpawnPoints;
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly)
-		TSubclassOf<AActor> Enemy1;
+		TSubclassOf<APawn> Enemy1;
 
 	UPROPERTY(EditInstanceOnly, meta = (DisplayName = "Is SlimeBase", ToolTip = "Is this enemy an instance of SlimeBase"))
 		bool Enemy1_IsSlimeBase = false;
 
 	UPROPERTY(BlueprintReadWrite, EditInstanceOnly)
-		TSubclassOf<AActor> Enemy2;
+		TSubclassOf<APawn> Enemy2;
 
 	UPROPERTY(EditInstanceOnly, meta = (DisplayName = "Is Slimebase", ToolTip = "Is this enemy an instance of SlimeBase"))
 		bool Enemy2_IsSlimeBase = false;

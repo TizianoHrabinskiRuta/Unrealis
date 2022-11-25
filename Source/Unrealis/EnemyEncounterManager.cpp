@@ -69,6 +69,13 @@ void AEnemyEncounterManager::BeginPlay()
 			return; 
 		}
 
+	if (EnemiesAreInstantAggro && PlayerReference == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Enemies are instant aggro but no player reference has been set @EnemyEncounterManager"));
+		CanInitiateEncounter = false;
+		return;
+	}
+
 
 	if (SpawnOnPlay) { SpawnEnemies(); OnEncounterStart();	}
 
@@ -181,12 +188,7 @@ bool AEnemyEncounterManager::SpawnSlimeBase(TSubclassOf<AActor> Reference)
 	}
 
 	if (EnemiesAreInstantAggro)
-	{
-		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsObject(TEXT("Target"), PlayerReference);
-		SpawnedInstance->GetController<AEnemyController>()->GetBlackboard()->SetValueAsBool(TEXT("IsInstantAggro"), true);
 		SpawnedInstance->SetPlayerReference(Cast<AActor>(PlayerReference));
-	}
-
 	
 	SpawnedInstance->OverrideDefaultPatrolPoints(GenerateRandomPatrolPoints(2));
 	SpawnedInstance->GetEnemyBase()->OnDeath.AddDynamic(this, &AEnemyEncounterManager::OnDeathCallback);

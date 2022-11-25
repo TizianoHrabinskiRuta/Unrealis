@@ -5,6 +5,7 @@
 #include "EnemyBaseComponent.h"
 #include "SlimeBase.h"
 #include "AIEnemyBase.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
 AFireball::AFireball()
@@ -60,11 +61,10 @@ void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class 
 		OtherActor->Destroy();
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("pollo"));
 
 	if (!OtherActor->ActorHasTag("PlayerTag"))
 	{
-		OnDestruction.Broadcast(this);
+		OnDestruction.Broadcast(this, GetActorLocation());
 		Destroy();
 	}
 
@@ -112,7 +112,7 @@ void AFireball::Move()
 	}
 	else
 	{
-		OnDestruction.Broadcast(this);
+		OnDestruction.Broadcast(this, GetActorLocation());
 
 	}
 }
@@ -129,6 +129,11 @@ void AFireball::Tick(float DeltaTime)
 
 	if(ShouldMove)
 	Move();
+
+	if (SetPlayerReference)
+	{
+		GFX->SetWorldRotation(UKismetMathLibrary::FindLookAtRotation(GFX->GetComponentLocation(), SetPlayerReference->GetActorLocation()));
+	}
 
 }
 

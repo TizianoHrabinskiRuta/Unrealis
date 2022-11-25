@@ -2,6 +2,7 @@
 
 
 #include "FireballComponent.h"
+#include "EngineGlobals.h"
 #include "Fireball.h"
 
 // Sets default values for this component's properties
@@ -51,6 +52,8 @@ bool UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, fl
 	{
 		GetWorld()->GetTimerManager().SetTimer(CooldownHandle, this, &UFireballComponent::CooldownCallback, 1.f, false);
 		SpawnedInstance->MasterFunction(MovementSpeed, DesiredTranslations, Damage, GFXMesh, HitboxMesh);
+		SpawnedInstance->SetPlayerReference = Owner;
+		SpawnedInstance->OnDestruction.AddDynamic(this, &UFireballComponent::OnDestructionReciever);
 		SpawnedInstance->StartMoving();
 		this->IsInCooldown = true;
 		return true;

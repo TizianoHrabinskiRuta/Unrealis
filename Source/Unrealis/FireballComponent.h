@@ -13,6 +13,8 @@ class UNREALIS_API UFireballComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDestructionDelegate, FVector, DestructionLocation);
+
 public:	
 	// Sets default values for this component's properties
 	UFireballComponent();
@@ -24,6 +26,12 @@ protected:
 	UFUNCTION(BlueprintNativeEvent) //quirk of BNE, it will call the function in c++ then fire the event, not implemented squiggly is a false error
 		void CooldownCallback();
 
+	UFUNCTION()
+		inline void OnDestructionReciever(AActor* OwnerRef, FVector DestructionLocation)
+	{
+		OnDestruction.Broadcast(DestructionLocation);
+	}
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite) //unused and unimplemented, if i need it i can, but since i dont have to i wont :p
 		TArray<AActor*> SpawnedInstances;
 
@@ -32,8 +40,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float CooldownTime = 10.f;
-
-
 
 	FTimerHandle CooldownHandle;
 
@@ -49,5 +55,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE float GetCooldownTime() const { return CooldownTime; }
+
+	UPROPERTY(BlueprintAssignable)
+		FOnDestructionDelegate OnDestruction;
 
 };

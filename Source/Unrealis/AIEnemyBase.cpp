@@ -4,6 +4,7 @@
 #include "AIEnemyBase.h"
 #include "EnemyBaseComponent.h"
 #include "EnemyController.h"
+#include "EngineGlobals.h"
 #include "Perception/PawnSensingComponent.h"
 
 // Sets default values
@@ -31,6 +32,7 @@ void AAIEnemyBase::BeginPlay()
 		SelfController->OnAttack1Call.AddDynamic(this, &AAIEnemyBase::ExecuteAttack1);
 	}
 	
+
 
 	if (HealthComponent)
 		this->HealthComponent->OnDeath.AddDynamic(this, &AAIEnemyBase::OnDeathCallback); else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Didnt instance EBC correctly @AIEnemyBase"));
