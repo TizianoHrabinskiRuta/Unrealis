@@ -3,19 +3,22 @@
 
 #include "AttackNode.h"
 #include "AIEnemyBase.h"
+#include "EngineGlobals.h"
 #include "EnemyController.h"
 
  EBTNodeResult::Type UAttackNode::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
  {
 	AEnemyController* Enemy = Cast<AEnemyController>(OwnerComp.GetAIOwner());
+	
 
 
 	if (Enemy)
 	{
-		Enemy->CallExecuteAttack1();
+		Enemy->GetPawn<AAIEnemyBase>()->ExecuteAttack1();
 		
 
 		Enemy->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), NULL);
+
 
 		return EBTNodeResult::Succeeded;
 	}

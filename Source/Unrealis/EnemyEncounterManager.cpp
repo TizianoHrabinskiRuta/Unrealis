@@ -5,6 +5,7 @@
 #include "AIEnemyBase.h"
 #include "SlimeBase.h"
 #include "EnemyBaseComponent.h"
+#include "EngineGlobals.h"
 #include "EnemyController.h"
 #include "Kismet/KismetMathLibrary.h"
 

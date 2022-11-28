@@ -32,6 +32,7 @@ void AAIEnemyBase::BeginPlay()
 		SelfController->OnAttack1Call.AddDynamic(this, &AAIEnemyBase::ExecuteAttack1);
 	}
 	
+	
 
 
 	if (HealthComponent)

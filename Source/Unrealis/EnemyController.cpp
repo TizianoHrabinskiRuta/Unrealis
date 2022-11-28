@@ -83,6 +83,7 @@ void AEnemyController::SetPlayerCaught(APawn* CaughtPawn)
 
 void AEnemyController::CallExecuteAttack1()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Called @EC"));
 	OnAttack1Call.Broadcast();
 }
 
