@@ -39,9 +39,9 @@ void UFireballComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	// ...
 }
 
-bool UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner)
+AActor* UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner,  UNiagaraComponent* InParticleToSpawn)
 {
-	if (IsInCooldown) return false;
+	if (IsInCooldown) return nullptr;
 
 	FVector UpdatedLocation = Location;
 	UpdatedLocation += ForwardVector * 25.f;
@@ -56,12 +56,15 @@ bool UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, fl
 		SpawnedInstance->OnDestruction.AddDynamic(this, &UFireballComponent::OnDestructionReciever);
 		SpawnedInstance->StartMoving();
 		this->IsInCooldown = true;
-		return true;
+
+
+
+		return SpawnedInstance;
 	}
 	else
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Failed to spawn fireball @FireballComponent"));
-		return false;
+		return nullptr;
 	}	
 }
 
