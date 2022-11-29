@@ -16,10 +16,6 @@
 	{
 		Enemy->GetPawn<AAIEnemyBase>()->ExecuteAttack1();
 		
-
-		Enemy->GetBlackboardComponent()->SetValueAsObject(TEXT("Target"), NULL);
-
-
 		return EBTNodeResult::Succeeded;
 	}
 

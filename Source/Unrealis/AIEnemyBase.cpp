@@ -55,7 +55,7 @@ void AAIEnemyBase::OnPlayerCaught(APawn* CaughtPawn)
 #pragma region BlueprintNativeEvents
 void AAIEnemyBase::OnDeathCallback_Implementation()
 {
-	Destroy();
+	
 }
 
 void AAIEnemyBase::ExecuteAttack1_Implementation()
