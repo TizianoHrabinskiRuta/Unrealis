@@ -13,6 +13,8 @@ class UNREALIS_API AAIEnemyBase : public ACharacter
 {
 	GENERATED_BODY()
 
+		DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttackAnimationEndedDelegate);
+
 public:
 	// Sets default values for this character's properties
 	AAIEnemyBase();
@@ -20,12 +22,21 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UBehaviorTree* Tree;	
 
+	UPROPERTY()
+		FAttackAnimationEndedDelegate OnAttackEnd;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintNativeEvent)
 		void OnDeathCallback();
+
+	UFUNCTION(BlueprintCallable)
+		FORCEINLINE void CallAttackEndDelegate()
+	{
+		OnAttackEnd.Broadcast();
+	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UEnemyBaseComponent* HealthComponent;

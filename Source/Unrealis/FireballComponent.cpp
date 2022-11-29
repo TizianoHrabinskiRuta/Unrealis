@@ -39,7 +39,7 @@ void UFireballComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAc
 	// ...
 }
 
-AActor* UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner,  UNiagaraComponent* InParticleToSpawn)
+AActor* UFireballComponent::Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner)
 {
 	if (IsInCooldown) return nullptr;
 

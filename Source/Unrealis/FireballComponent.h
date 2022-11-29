@@ -38,8 +38,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite) //unused and unimplemented, if i need it i can, but since i dont have to i wont :p
 		TArray<AActor*> SpawnedInstances;
 
-	UPROPERTY()
-		class UNiagaraComponent* ParticleToSpawn;
+	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		bool IsInCooldown = false;
@@ -54,7 +53,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-		AActor* Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner,  UNiagaraComponent* InParticleToSpawn);
+		AActor* Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner);
 
 	UFUNCTION(BlueprintCallable)
 		void SetCooldownTime(float TimeToSetTo);
