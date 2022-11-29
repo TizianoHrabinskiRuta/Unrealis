@@ -10,6 +10,6 @@ public class UnrealisTarget : TargetRules
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "Unrealis" } );
+		ExtraModuleNames.AddRange( new string[] { "Unrealis", "Niagara" } );
 	}
 }

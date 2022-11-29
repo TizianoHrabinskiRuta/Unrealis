@@ -30,10 +30,16 @@ protected:
 		inline void OnDestructionReciever(AActor* OwnerRef, FVector DestructionLocation)
 	{
 		OnDestruction.Broadcast(DestructionLocation);
+
+
+
 	}
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite) //unused and unimplemented, if i need it i can, but since i dont have to i wont :p
 		TArray<AActor*> SpawnedInstances;
+
+	UPROPERTY()
+		class UNiagaraComponent* ParticleToSpawn;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		bool IsInCooldown = false;
@@ -48,7 +54,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-		bool Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner);
+		AActor* Fire(float MovementSpeed, float DesiredTranslations, float Damage, UStaticMesh* GFXMesh, UStaticMesh* HitboxMesh, FVector Location, FVector ForwardVector, FRotator Rotation, AActor* Owner,  UNiagaraComponent* InParticleToSpawn);
 
 	UFUNCTION(BlueprintCallable)
 		void SetCooldownTime(float TimeToSetTo);
