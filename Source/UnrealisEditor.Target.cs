@@ -11,6 +11,7 @@ public class UnrealisEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
 
-		ExtraModuleNames.AddRange( new string[] { "Unrealis" } );
+		ExtraModuleNames.AddRange( new string[] { "Unrealis", "Niagara" } );
+
 	}
 }
