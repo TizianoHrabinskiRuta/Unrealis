@@ -28,6 +28,9 @@ AFireball::AFireball()
 // Called when the game starts or when spawned
 void AFireball::BeginPlay()
 {
+	Hitbox->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	GFX->SetCollisionProfileName(TEXT("NoCollision"));
+
 	Super::BeginPlay();
 	this->Hitbox->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
 	this->Hitbox->OnComponentHit.AddDynamic(this, &AFireball::OnHit);
