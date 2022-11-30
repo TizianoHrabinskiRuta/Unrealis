@@ -2,6 +2,7 @@
 
 
 #include "EnemyBaseComponent.h"
+#include "EngineGlobals.h"
 
 // Sets default values for this component's properties
 UEnemyBaseComponent::UEnemyBaseComponent()

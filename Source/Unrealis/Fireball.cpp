@@ -30,8 +30,43 @@ void AFireball::BeginPlay()
 {
 	Super::BeginPlay();
 	this->Hitbox->OnComponentBeginOverlap.AddDynamic(this, &AFireball::OnOverlapBegin);
+	this->Hitbox->OnComponentHit.AddDynamic(this, &AFireball::OnHit);
 	this->Tags.Add(TEXT("Fireball"));	
 }
+
+void AFireball::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (OtherActor->ActorHasTag("EnemyTag"))
+	{
+		if (Cast<AAIEnemyBase>(OtherActor))
+		{
+			 Cast<AAIEnemyBase>(OtherActor)->GetEnemyBase()->TakeDamage(this->Damage);
+			
+		}
+		else
+		{
+			UEnemyBaseComponent* SlimeBase = Cast<ASlimeBase>(OtherActor)->GetEnemyBase();
+			if (SlimeBase)
+			{
+				SlimeBase->TakeDamage(this->Damage);
+			}
+		}
+	}
+
+	if (OtherActor->ActorHasTag("FireballDestructibleWall"))
+	{
+		OtherActor->Destroy();
+	}
+
+
+	if (!OtherActor->ActorHasTag("PlayerTag"))
+	{
+		OnDestruction.Broadcast(this, GetActorLocation());
+		Destroy();
+	}
+}
+
+
 
 void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,
 	bool bFromSweep, const FHitResult& SweepResult)
@@ -57,7 +92,6 @@ void AFireball::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class 
 
 	if (OtherActor->ActorHasTag("FireballDestructibleWall"))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Hit a destructible wall"));
 		OtherActor->Destroy();
 	}
 
