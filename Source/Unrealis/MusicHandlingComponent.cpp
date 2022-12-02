@@ -52,6 +52,7 @@ void UMusicHandlingComponent::BeginPlay()
 
 void UMusicHandlingComponent::FadeMusicIn()
 {
+
 	if (IsPlayingAmbient)
 	{
 		MusicPlayer->SetSound(AmbiancePlaylist[AmbiancePlaylistIndex]);
@@ -64,8 +65,19 @@ void UMusicHandlingComponent::FadeMusicIn()
 	}
 }
 
+void UMusicHandlingComponent::FadeSpecifiedMusicIn()
+{
+	if (IndexOfSpecifiedMusic == NULL) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("There was an error fading in music @MusicHandlingComponent::FadeSpecifiedMusicIn")); return; }
+
+	MusicPlayer->SetSound(CombatPlaylist[IndexOfSpecifiedMusic]);
+	MusicPlayer->FadeIn(1.f, 1.f, 0.f);
+
+}
+
 void UMusicHandlingComponent::SwitchTracks()
 {
+	if (BossMusicOverride) return;
+
 	if (IsPlayingAmbient)
 	{
 		if (AmbiancePlaylistIndex + 1 > AmbiancePlaylist.Num() - 1) { AmbiancePlaylistIndex = 0; MusicPlayer->SetSound(AmbiancePlaylist[0]); }
@@ -106,3 +118,19 @@ void UMusicHandlingComponent::SwitchToCombatMusic()
 
 	 IsPlayingAmbient = true;
  }
+
+ void UMusicHandlingComponent::SwitchToCombatMusicAtIndex(int Index, bool IsForBossMusic)
+ {
+	 if (!CombatPlaylist.IsValidIndex(Index)) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("No music pointer exists at this index @MusicHandlingComponent::SwitchToCombatMusicAtIndex")); return; }
+	 if (IsForBossMusic) BossMusicOverride = true;
+
+	 IndexOfSpecifiedMusic = Index;
+
+	 MusicPlayer->FadeOut(1.f, 0.f);
+
+	 GetWorld()->GetTimerManager().SetTimer(FadeHandle, this, &UMusicHandlingComponent::FadeSpecifiedMusicIn, 1.f, false);
+
+	 IsPlayingAmbient = false;
+ }
+
+ 
