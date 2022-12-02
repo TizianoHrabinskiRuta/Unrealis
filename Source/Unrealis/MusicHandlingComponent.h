@@ -35,9 +35,6 @@ protected:
 		void FadeMusicIn();
 
 	UFUNCTION()
-		void FadeSpecifiedMusicIn();
-
-	UFUNCTION()
 		void SwitchTracks();
 
 	UPROPERTY()
@@ -51,16 +48,10 @@ protected:
 		int CombatPlaylistIndex = 0;
 
 	UPROPERTY()
-		int IndexOfSpecifiedMusic = NULL;
-
-	UPROPERTY()
 		bool CanInitiate = true;
 
 	UPROPERTY()
 		bool IsPlayingAmbient = true;
-
-	UPROPERTY()
-		bool BossMusicOverride = false;
 
 public:	
 	// Called every frame
@@ -72,14 +63,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 		FORCEINLINE void SwitchToAmbientMusic();
 
-	UFUNCTION(BlueprintCallable)
-		FORCEINLINE void SwitchToCombatMusicAtIndex(int Index, bool IsForBossMusic);
-
-	UFUNCTION(BlueprintCallable)
-		FORCEINLINE void EndBossMusic()
-	{
-		BossMusicOverride = false;
-		IsPlayingAmbient = true;          
-	}
 		
 };
